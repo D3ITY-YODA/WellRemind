@@ -146,3 +146,39 @@
     }
 
     .add-med:hover { color: var(--sky-dark); }
+
+     .btn-primary {
+      width: 100%;
+      max-width: 440px;
+      padding: 0.9rem;
+      background: var(--sky);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-primary:hover { background: var(--sky-dark); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    .btn-secondary {
+      width: 100%;
+      max-width: 440px;
+      padding: 0.75rem;
+      background: none;
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: #fca5a5; color: #ef4444; 
