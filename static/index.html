@@ -291,6 +291,31 @@
   <div id="status"></div>
 
   <footer>Works in Chrome & Edge. Requires notification permission.</footer>
+
+  script>
+  const STORAGE_KEY = 'wellremind_sub';
+  let currentSubscription = null;
+
+  // ─── Init ───────────────────────────────────────────────────────────────────
+
+  window.addEventListener('load', async () => {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      showStatus('error', '⚠️ Push notifications are not supported in this browser.');
+      document.getElementById('enableBtn').disabled = true;
+      return;
+    }
+
+    // Register the service worker
+    await navigator.serviceWorker.register('/sw.js');
+
+    // Check if already subscribed
+    const reg = await navigator.serviceWorker.ready;
+    const existing = await reg.pushManager.getSubscription();
+    if (existing) {
+      currentSubscription = existing;
+      setActiveUI(true);
+    }
+  });
   
     
   </body>
