@@ -292,7 +292,7 @@
 
   <footer>Works in Chrome & Edge. Requires notification permission.</footer>
 
-  script>
+  <script>
   const STORAGE_KEY = 'wellremind_sub';
   let currentSubscription = null;
 
@@ -342,5 +342,10 @@
       });
 
       currentSubscription = sub;
+
+       // Collect settings
+      const waterInterval = parseInt(document.getElementById('waterInterval').value, 10);
+      const medTimes = getMedTimes();
+
     
-  </body>
+  
