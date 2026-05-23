@@ -329,5 +329,18 @@
         showStatus('error', '❌ Notification permission denied. Please allow notifications in your browser settings.');
         return;
       }
+
+       // Get VAPID public key from server
+      const keyRes = await fetch('/api/vapid-key');
+      const { publicKey } = await keyRes.json();
+
+      // Subscribe to push
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicKey),
+      });
+
+      currentSubscription = sub;
     
   </body>
