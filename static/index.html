@@ -265,6 +265,32 @@
       <option value="180">3 hours</option>
     </select>
   </div>
+
+   <!-- Medication reminder card -->
+  <div class="card">
+    <div class="card-title">
+      <span class="emoji">💊</span> Medication Reminders
+    </div>
+    <label>Remind me at these times</label>
+    <div id="medList">
+      <div class="med-row">
+        <input type="time" value="08:00" />
+      </div>
+    </div>
+    <button class="add-med" onclick="addMedTime()">＋ Add another time</button>
+  </div>
+
+  <button class="btn-primary" id="enableBtn" onclick="enableReminders()">
+    Enable Reminders
+  </button>
+
+  <button class="btn-secondary" id="disableBtn" onclick="disableReminders()" style="display:none;">
+    Disable Reminders
+  </button>
+
+  <div id="status"></div>
+
+  <footer>Works in Chrome & Edge. Requires notification permission.</footer>
   
     
   </body>
