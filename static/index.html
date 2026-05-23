@@ -347,5 +347,26 @@
       const waterInterval = parseInt(document.getElementById('waterInterval').value, 10);
       const medTimes = getMedTimes();
 
+      // Send to server
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subscription: sub.toJSON(),
+          waterInterval,
+          medTimes,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+      setActiveUI(true);
+      showStatus('success', '✅ Reminders enabled! You can close this tab.');
+    } catch (err) {
+      console.error(err);
+      showStatus('error', `❌ Failed: ${err.message}`);
+    }
+  }
+
     
   
