@@ -385,5 +385,25 @@
     showStatus('info', 'Reminders disabled.');
   }
 
+  // ─── Medication times UI ─────────────────────────────────────────────────
+
+  function addMedTime() {
+    const list = document.getElementById('medList');
+    const row = document.createElement('div');
+    row.className = 'med-row';
+    row.innerHTML = `
+      <input type="time" value="12:00" />
+      <button class="btn-icon" onclick="this.parentElement.remove()" title="Remove">✕</button>
+    `;
+    list.appendChild(row);
+  }
+
+  function getMedTimes() {
+    return Array.from(document.querySelectorAll('#medList input[type="time"]'))
+      .map(i => i.value)
+      .filter(Boolean);
+  }
+
+
     
   
