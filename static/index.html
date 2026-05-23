@@ -404,6 +404,22 @@
       .filter(Boolean);
   }
 
+   // ─── UI Helpers ──────────────────────────────────────────────────────────
+
+  function setActiveUI(active) {
+    document.getElementById('activeBanner').style.display = active ? 'flex' : 'none';
+    document.getElementById('enableBtn').style.display  = active ? 'none' : 'block';
+    document.getElementById('disableBtn').style.display = active ? 'block' : 'none';
+  }
+
+  function showStatus(type, msg) {
+    const el = document.getElementById('status');
+    el.className = type;
+    el.textContent = msg;
+  }
+
+  
+
 
     
   
