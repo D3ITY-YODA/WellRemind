@@ -317,5 +317,17 @@
     }
   });
   
+  // ─── Enable Reminders ────────────────────────────────────────────────────
+
+  async function enableReminders() {
+    showStatus('info', '⏳ Setting up reminders…');
+
+    try {
+      // Ask for notification permission
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        showStatus('error', '❌ Notification permission denied. Please allow notifications in your browser settings.');
+        return;
+      }
     
   </body>
