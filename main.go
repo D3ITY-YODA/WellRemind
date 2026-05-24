@@ -19,3 +19,10 @@ type UserConfig struct {
 	LastWater     time.Time            `json:"-"`             // tracks last water notification
 	NotifiedMeds  map[string]string    `json:"-"`             // tracks med notifs per day: "YYYY-MM-DD HH:MM"
 }
+
+var (
+	mu           sync.Mutex
+	users        = make(map[string]*UserConfig) // keyed by push endpoint
+	vapidPrivate string
+	vapidPublic  string
+)
