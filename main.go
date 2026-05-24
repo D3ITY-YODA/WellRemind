@@ -26,3 +26,13 @@ var (
 	vapidPrivate string
 	vapidPublic  string
 )
+
+func main() {
+	// Generate VAPID keys (used to authenticate push notifications)
+	var err error
+	vapidPrivate, vapidPublic, err = webpush.GenerateVAPIDKeys()
+	if err != nil {
+		log.Fatal("Failed to generate VAPID keys:", err)
+	}
+
+	mux := http.NewServeMux()
