@@ -77,4 +77,14 @@ func handleSubscribe(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
+	mu.Lock()
+	config.LastWater = time.Now()
+	config.NotifiedMeds = make(map[string]string)
+	users[config.Subscription.Endpoint] = &config
+	mu.Unlock()
+
+	log.Printf("✅ New subscriber. Water every %d min. Meds at: %v\n",
+		config.WaterInterval, config.MedTimes)
+
+
 }
