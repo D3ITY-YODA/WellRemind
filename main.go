@@ -86,5 +86,9 @@ func handleSubscribe(w http.ResponseWriter, r *http.Request){
 	log.Printf("✅ New subscriber. Water every %d min. Meds at: %v\n",
 		config.WaterInterval, config.MedTimes)
 
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"status": "subscribed"})
+
 
 }
