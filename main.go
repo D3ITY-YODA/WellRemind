@@ -36,3 +36,6 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+
+	// Serve static files (HTML, JS, service worker)
+	mux.Handle("/", http.FileServer(http.Dir("static")))
