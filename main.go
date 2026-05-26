@@ -39,3 +39,9 @@ func main() {
 
 	// Serve static files (HTML, JS, service worker)
 	mux.Handle("/", http.FileServer(http.Dir("static")))
+
+	// API routes
+	mux.HandleFunc("/api/vapid-key", handleVapidKey)
+	mux.HandleFunc("/api/subscribe", handleSubscribe)
+	mux.HandleFunc("/api/unsubscribe", handleUnsubscribe)
+
