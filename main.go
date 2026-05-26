@@ -45,3 +45,10 @@ func main() {
 	mux.HandleFunc("/api/subscribe", handleSubscribe)
 	mux.HandleFunc("/api/unsubscribe", handleUnsubscribe)
 
+	// Start the background reminder scheduler
+	go runScheduler()
+
+	fmt.Println("🚀 WellRemind running at http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", mux))
+}
+
