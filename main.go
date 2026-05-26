@@ -59,3 +59,22 @@ func handleVapidKey(w http.ResponseWriter, r *http.Request){
 	json.NewEncoder(w).Encode(map[string]string{"publicKey": vapidPublic})
 }
 
+//handleSUbscribe registers a user's push subscription and reminder settings.
+func handleSubscribe(w http.ResponseWriter, r *http.Request){
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var config UserConfig
+	if err :=json.NewDecoder(r.Body).Decode(&config); err != nil{
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	if config.Subscription.Endpoint == ""{
+		http.Error(w, "Missing push subscription endpoint", http.StatusBadRequest)
+		return
+	}
+
+}
