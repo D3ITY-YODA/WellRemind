@@ -129,4 +129,31 @@ func runScheduler() {
 	}
 }
 
+func checkWater(user *UserConfig, now time.Time) {
+	if user.WaterInterval <= 0 {
+		return
+	}
+	if now.Sub(user.LastWater).Minutes() >= float64(user.WaterInterval) {
+		sendPush(user.Subscription, "💧 Time to Hydrate!", "Drink a glass of water — your body will thank you.")
+		user.LastWater = now
+	}
+}
+
+func checkMedications(user *UserConfig, now time.Time) {
+	currentTime := now.Format("15:04")
+	today := now.Format("2006-01-02")
+
+	for _, medTime := range user.MedTimes {
+		if medTime != currentTime {
+			continue
+		}
+		key := today + " " + medTime
+		if _, alreadySent := user.NotifiedMeds[key]; alreadySent {
+			continue
+		}
+		sendPush(user.Subscription, "💊 Medication Reminder", fmt.Sprintf("Time to take your %s medication.", medTime))
+		user.NotifiedMeds[key] = "sent"
+	}
+}
+
 
