@@ -89,6 +89,44 @@ func handleSubscribe(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]string{"status": "subscribed"})
-
-
 }
+
+// handleUnsubscribe removes a user's subscription.
+func handleUnsubscribe(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var body struct {
+		Endpoint string `json:"endpoint"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid body", http.StatusBadRequest)
+		return
+	}
+
+	mu.Lock()
+	delete(users, body.Endpoint)
+	mu.Unlock()
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"status": "unsubscribed"})
+}
+
+// runScheduler ticks every minute and sends reminders as needed.
+func runScheduler() {
+	ticker := time.NewTicker(1 * time.Minute)
+	defer ticker.Stop()
+
+	for now := range ticker.C {
+		mu.Lock()
+		for _, user := range users {
+			checkWater(user, now)
+			checkMedications(user, now)
+		}
+		mu.Unlock()
+	}
+}
+
+
