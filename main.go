@@ -156,4 +156,30 @@ func checkMedications(user *UserConfig, now time.Time) {
 	}
 }
 
+/ sendPush sends a Web Push notification to a subscriber.
+func sendPush(sub webpush.Subscription, title, body string) {
+	payload, err := json.Marshal(map[string]string{
+		"title": title,
+		"body":  body,
+	})
+	if err != nil {
+		log.Println("Failed to marshal push payload:", err)
+		return
+	}
+
+	resp, err := webpush.SendNotification(payload, &sub, &webpush.Options{
+		VAPIDPublicKey:  vapidPublic,
+		VAPIDPrivateKey: vapidPrivate,
+		Subscriber:      "mailto:wellremind@example.com",
+		TTL:             60,
+	})
+	if err != nil {
+		log.Println("Push failed:", err)
+		return
+	}
+	defer resp.Body.Close()
+	log.Printf("📬 Sent [%s] → HTTP %d\n", title, resp.StatusCode)
+}
+
+
 
