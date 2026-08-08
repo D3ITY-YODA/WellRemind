@@ -6,575 +6,1019 @@
   <title>WellRemind</title>
   <link rel="icon" href="/icon.svg" />
   <link rel="manifest" href="/manifest.json" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
   <style>
-    :root{
-      --bg:#f6fbff; --panel:#ffffff; --muted:#5b6b76; --accent:#0b7285; --accent-2:#2fb6c6; --ink:#08242b; --radius:12px;
+    :root {
+      --bg: #07111c;
+      --bg-soft: #0d1724;
+      --panel: rgba(10, 18, 30, 0.9);
+      --panel-elevated: rgba(15, 25, 40, 0.96);
+      --panel-light: rgba(148, 163, 184, 0.08);
+      --text: #e5edf5;
+      --text-strong: #f8fbff;
+      --muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.16);
+      --border-strong: rgba(148, 163, 184, 0.24);
+      --accent: #38bdf8;
+      --accent-deep: #0ea5e9;
+      --medical: #22c55e;
+      --medical-soft: rgba(34, 197, 94, 0.12);
+      --gold: #cbd5e1;
+      --danger: #fb7185;
+      --shadow-xl: 0 28px 80px rgba(2, 8, 23, 0.5);
+      --shadow-lg: 0 18px 46px rgba(2, 8, 23, 0.36);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max-width: 1200px;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,DM Sans,Arial;background:linear-gradient(180deg,#f8fdff 0%,var(--bg)100%);color:var(--ink);min-height:100vh;padding:2rem}
-    .container{max-width:1100px;margin:0 auto}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
-    .brand{display:flex;gap:0.85rem;align-items:center}
-    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(180deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px}
-    h1{margin:0;font-family:'DM Serif Display',serif;font-size:1.4rem}
-    .tag{color:var(--muted);font-size:0.95rem}
-    nav a{color:var(--muted);text-decoration:none;padding:0.45rem 0.6rem;border-radius:8px}
-    nav a:hover{background:rgba(11,114,133,0.06);color:var(--accent)}
 
-    .layout{display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start}
-    .col{display:flex;flex-direction:column;gap:1rem}
-    .card{background:var(--panel);border-radius:var(--radius);padding:1.1rem;border:1px solid rgba(6,18,24,0.04);box-shadow:0 6px 18px rgba(9,23,28,0.04)}
-    .card-title{font-weight:700;margin-bottom:0.5rem}
-    label{display:block;color:var(--muted);font-weight:600;margin-bottom:0.5rem}
-    select,input[type=time]{width:100%;padding:0.65rem;border-radius:10px;border:1px solid rgba(6,18,24,0.06)}
+    * {
+      box-sizing: border-box;
+    }
 
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:none;padding:0.8rem 1rem;border-radius:10px;font-weight:700;cursor:pointer}
-    .btn-primary:hover{filter:brightness(1.03);transform:translateY(-2px)}
-    .btn-secondary{background:transparent;border:1px solid rgba(6,18,24,0.06);padding:0.7rem;border-radius:10px}
+    html {
+      scroll-behavior: smooth;
+    }
 
-    .active-banner{display:flex;gap:0.6rem;align-items:center;padding:0.6rem;border-radius:10px;background:linear-gradient(90deg,rgba(11,114,133,0.06),rgba(47,182,198,0.03));border:1px solid rgba(11,114,133,0.06)}
-    .dot{width:10px;height:10px;background:var(--accent);border-radius:50%}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.08), transparent 18%),
+        linear-gradient(180deg, #030712 0%, #07111c 45%, #0b1422 100%);
+    }
 
-    .sidebar .card{position:sticky;top:2rem}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(rgba(255,255,255,0.015), rgba(255,255,255,0.015));
+      mask-image: radial-gradient(circle at center, black, transparent 85%);
+      opacity: 0.8;
+    }
 
-    footer{text-align:center;color:var(--muted);margin-top:1rem}
+    .page {
+      width: min(calc(100% - 1.5rem), var(--max-width));
+      margin: 0 auto;
+      padding: 1.3rem 0 3rem;
+      position: relative;
+      z-index: 1;
+    }
 
-    @media(max-width:920px){.layout{grid-template-columns:1fr}.sidebar .card{position:static}}
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.95rem;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text-strong);
+      background: linear-gradient(145deg, #0f3d56, #0b2032);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 12px 30px rgba(0,0,0,0.3);
+    }
+
+    .brand-copy h1 {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text-strong);
+    }
+
+    .brand-copy p {
+      margin: 0.2rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .top-link {
+      text-decoration: none;
+      color: #d6eefb;
+      font-weight: 600;
+      padding: 0.78rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(56, 189, 248, 0.08);
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .top-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(56, 189, 248, 0.3);
+      background: rgba(56, 189, 248, 0.14);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .setup-panel,
+    .feature-card,
+    .sidebar-card {
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-copy {
+      position: relative;
+      overflow: hidden;
+      padding: 3rem;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.14), transparent 30%),
+        linear-gradient(160deg, rgba(7, 17, 28, 0.98) 0%, rgba(10, 24, 38, 0.98) 52%, rgba(12, 33, 49, 0.98) 100%);
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      bottom: -80px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      background: rgba(56, 189, 248, 0.08);
+      color: #cbeeff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .hero-copy h2 {
+      margin: 0;
+      font-family: "DM Serif Display", serif;
+      font-size: clamp(2.8rem, 6vw, 4.9rem);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      max-width: 10ch;
+      color: var(--text-strong);
+    }
+
+    .hero-copy .lead {
+      max-width: 58ch;
+      margin: 1.2rem 0 0;
+      font-size: 1.03rem;
+      line-height: 1.8;
+      color: #bfd0df;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.8rem;
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--text-strong);
+      font-size: 0.98rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat span {
+      color: #afc2d2;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .setup-panel {
+      border-radius: var(--radius-xl);
+      padding: 1.25rem;
+      background: var(--panel);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .panel-header h3 {
+      margin: 0 0 0.35rem;
+      color: var(--text-strong);
+      font-size: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .panel-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    .pill {
+      white-space: nowrap;
+      padding: 0.52rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 197, 94, 0.18);
+      background: var(--medical-soft);
+      color: #b6f3ca;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .active-banner {
+      display: none;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem;
+      border-radius: 18px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(56, 189, 248, 0.06));
+      border: 1px solid rgba(34, 197, 94, 0.16);
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      background: var(--medical);
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.1);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    .active-banner strong {
+      display: block;
+      margin-bottom: 0.15rem;
+      color: #dcfce7;
+    }
+
+    .active-banner div:last-child {
+      color: #b7d9c1;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--panel-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin-bottom: 0.95rem;
+    }
+
+    .card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.14);
+      font-size: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.45rem;
+      color: #9fb0be;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    select,
+    input[type="time"] {
+      width: 100%;
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 0.82rem 0.9rem;
+      font: inherit;
+      color: var(--text);
+      background: #0b1522;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    select:focus,
+    input[type="time"]:focus {
+      outline: none;
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
+      background: #0d1928;
+    }
+
+    .subtle {
+      margin-top: 0.55rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .med-row,
+    .mindfulness-row {
+      display: flex;
+      gap: 0.55rem;
+      align-items: center;
+      margin-bottom: 0.55rem;
+    }
+
+    .med-row input,
+    .mindfulness-row input {
+      flex: 1;
+      margin: 0;
+    }
+
+    .btn-icon,
+    .btn-secondary,
+    .btn-primary {
+      font: inherit;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-icon {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      background: #101a29;
+      color: var(--text);
+    }
+
+    .btn-icon:hover {
+      background: rgba(251, 113, 133, 0.08);
+      border-color: rgba(251, 113, 133, 0.2);
+      color: #fecdd3;
+    }
+
+    .inline-add {
+      margin-top: 0.55rem;
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border-strong);
+      background: #0f1a2a;
+      color: #d5e3ef;
+      padding: 0.8rem 0.95rem;
+      font-weight: 600;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      border-color: rgba(56, 189, 248, 0.26);
+      background: #122033;
+      color: #ffffff;
+    }
+
+    .btn-primary {
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      background: linear-gradient(135deg, #0ea5e9, #0369a1);
+      color: white;
+      padding: 0.92rem 1.05rem;
+      font-weight: 700;
+      box-shadow: 0 16px 34px rgba(14, 165, 233, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(14, 165, 233, 0.24);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+
+    .actions .btn-primary,
+    .actions .btn-secondary {
+      flex: 1 1 180px;
+    }
+
+    #status {
+      min-height: 1.25rem;
+      margin-top: 0.8rem;
+      padding: 0.9rem 1rem;
+      border-radius: 14px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      display: none;
+      border: 1px solid transparent;
+    }
+
+    #status.success {
+      display: block;
+      background: rgba(34, 197, 94, 0.12);
+      color: #c7f9d8;
+      border-color: rgba(34, 197, 94, 0.18);
+    }
+
+    #status.error {
+      display: block;
+      background: rgba(251, 113, 133, 0.12);
+      color: #ffd7df;
+      border-color: rgba(251, 113, 133, 0.18);
+    }
+
+    #status.info {
+      display: block;
+      background: rgba(56, 189, 248, 0.12);
+      color: #d7f3ff;
+      border-color: rgba(56, 189, 248, 0.18);
+    }
+
+    .dashboard-lower,
+    .analytics-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .dashboard-lower {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .analytics-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .feature-card,
+    .sidebar-card {
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      background: rgba(10, 18, 30, 0.82);
+    }
+
+    .feature-card h4,
+    .sidebar-card h4 {
+      margin: 0 0 0.55rem;
+      color: var(--text-strong);
+      font-size: 1rem;
+    }
+
+    .feature-card p,
+    .sidebar-card p,
+    .sidebar-card small {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.92rem;
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.14);
+      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+    }
+
+    ul.clean-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.clean-list li + li {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-top: 1.8rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .dashboard-lower,
+      .analytics-grid,
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(calc(100% - 1rem), var(--max-width));
+      }
+
+      .topbar,
+      .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-copy {
+        padding: 1.5rem;
+      }
+
+      .hero-copy h2 {
+        font-size: 2.75rem;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
+  <main class="page">
+    <header class="topbar">
       <div class="brand">
         <div class="logo">WR</div>
-        <div>
+        <div class="brand-copy">
           <h1>WellRemind</h1>
-          <div class="tag">Your quiet health companion</div>
+          <p>Professional wellness reminders</p>
         </div>
       </div>
-      <nav><a href="/symptom-checker">Symptom Checker</a></nav>
+      <a class="top-link" href="/symptom-checker">Symptom Checker</a>
     </header>
 
-    <div class="layout">
-      <main class="col">
-        <div class="card active-banner" id="activeBanner" style="display:none">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Clinical clarity • Daily consistency</div>
+        <h2>Stay consistent with the care routines that matter.</h2>
+        <p class="lead">
+          WellRemind provides a refined reminder experience for hydration, medication, mindfulness, and daily check-ins — presented in a focused interface designed to feel dependable, discreet, and professional.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>Structured routines</strong>
+            <span>Organize core wellness reminders in one calm, intentional dashboard.</span>
+          </div>
+          <div class="stat">
+            <strong>Reliable alerts</strong>
+            <span>Receive background notifications for medications and healthy daily habits.</span>
+          </div>
+          <div class="stat">
+            <strong>Track symptoms</strong>
+            <span>Review recent symptom checks and simple usage trends at a glance.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="setup-panel">
+        <div class="panel-header">
+          <div>
+            <h3>Configure your wellness schedule</h3>
+            <p>Choose your preferred timing once, then let reminders support your day quietly in the background.</p>
+          </div>
+          <div class="pill">Secure browser setup</div>
+        </div>
+
+        <div class="active-banner" id="activeBanner">
           <div class="dot"></div>
-          <div><strong>Reminders active.</strong><div style="color:var(--muted)">You'll be notified in the background.</div></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Hydration Reminder</div>
-          <label for="waterInterval">Remind me every</label>
-          <select id="waterInterval">
-            <option value="0">— Off —</option>
-            <option value="30">30 minutes</option>
-            <option value="60" selected>1 hour</option>
-            <option value="90">1.5 hours</option>
-            <option value="120">2 hours</option>
-            <option value="180">3 hours</option>
-          </select>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Medication Reminders</div>
-          <label>Remind me at these times</label>
-          <div id="medList"><div class="med-row"><input type="time" value="08:00"/></div></div>
-          <div style="margin-top:0.6rem"><button class="btn-secondary" onclick="addMedTime()">＋ Add time</button></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Daily Check-in</div>
-          <label for="checkinTime">Check in at</label>
-          <input id="checkinTime" type="time" value="18:00" />
-        </div>
-
-        <div class="card">
-          <div class="card-title">Symptom Checker</div>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="color:var(--muted)">Quick symptom assessments and guidance.</div>
-            <a class="btn-primary" href="/symptom-checker">Open</a>
+          <div>
+            <strong>Reminders active.</strong>
+            You'll be notified in the background.
           </div>
         </div>
 
-        <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
-          <button class="btn-primary" id="enableBtn" onclick="enableReminders()">Enable Reminders</button>
-          <button class="btn-secondary" id="disableBtn" onclick="disableReminders()" style="display:none">Disable</button>
+        <div class="form-grid">
+          <section class="card">
+            <div class="card-title">
+              <div class="card-icon">💧</div>
+              <span>Hydration Reminder</span>
+            </div>
+            <label for="waterInterval">Remind me every</label>
+            <select id="waterInterval">
+              <option value="0">— Off —</option>
+              <option value="30">30 minutes</option>
+              <option value="60" selected>1 hour</option>
+              <option value="90">1.5 hours</option>
+              <option value="120">2 hours</option>
+              <option value="180">3 hours</option>
+            </select>
+            <p class="subtle">Helpful for workdays, recovery routines, and long periods of focused activity.</p>
+          </section>
+
+          <section class="card">
+            <div class="card-title">
+              <div class="card-icon">💊</div>
+              <span>Medication Reminders</span>
+            </div>
+            <label>Remind me at these times</label>
+            <div id="medList">
+              <div class="med-row">
+                <input type="time" value="08:00" />
+              </div>
+            </div>
+            <div class="inline-add">
+              <button class="btn-secondary" type="button" onclick="addMedTime()">＋ Add time</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-title">
+              <div class="card-icon">🧘</div>
+              <span>Mindfulness Prompts</span>
+            </div>
+            <label>Pause and reset at</label>
+            <div id="mindfulnessList"></div>
+            <div class="inline-add">
+              <button class="btn-secondary" type="button" onclick="addMindfulnessTime()">＋ Add mindfulness time</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-title">
+              <div class="card-icon">📝</div>
+              <span>Daily Check-in</span>
+            </div>
+            <label for="checkinTime">Check in at</label>
+            <input id="checkinTime" type="time" value="18:00" />
+            <p class="subtle">Set a consistent time to reflect on symptoms, energy, and overall wellbeing.</p>
+          </section>
         </div>
 
-        <div id="status" style="margin-top:0.6rem"></div>
-      </main>
+        <div class="actions">
+          <button class="btn-primary" id="enableBtn" type="button" onclick="enableReminders()">Enable Reminders</button>
+          <button class="btn-secondary" id="disableBtn" type="button" onclick="disableReminders()" style="display:none">Disable Reminders</button>
+        </div>
 
-      <aside class="sidebar">
-        <div class="card">
-          <div class="card-title">Recent Symptom Checks</div>
-          <div id="historyArea"><small style="color:var(--muted)">No recent checks</small></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Symptom Analytics</div>
-          <div id="analyticsArea"><small style="color:var(--muted)">No data yet</small></div>
-        </div>
+        <div id="status"></div>
+      </div>
+    </section>
+
+    <section class="dashboard-lower">
+      <article class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h4>Background notifications</h4>
+        <p>Designed to provide discreet reminders without distracting from your work, routine, or recovery.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🩺</div>
+        <h4>Professional presentation</h4>
+        <p>A darker premium interface with a calmer visual tone and stronger information hierarchy.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h4>At-a-glance monitoring</h4>
+        <p>Recent symptom checks and analytics stay visible so patterns are easier to review over time.</p>
+      </article>
+    </section>
+
+    <section class="analytics-grid">
+      <aside class="sidebar-card">
+        <h4>Recent Symptom Checks</h4>
+        <div id="historyArea"><small>No recent checks</small></div>
       </aside>
-    </div>
 
-    <footer>Works in modern browsers. Requires notification permission.</footer>
-  </div>
+      <aside class="sidebar-card">
+        <h4>Symptom Analytics</h4>
+        <div id="analyticsArea"><small>No data yet</small></div>
+      </aside>
+    </section>
+
+    <footer>Works in modern browsers. Notification permission is required.</footer>
+  </main>
+
   <script>
-  // ─── Existing app script (preserved) ─────────────────────────────────────
-  const SETTINGS_KEY = 'wellremind.settings.v1';
-  let currentSubscription = null;
+    const SETTINGS_KEY = 'wellremind.settings.v1';
+    let currentSubscription = null;
 
-  // ─── Enable Reminders ────────────────────────────────────────────────────
+    async function enableReminders() {
+      showStatus('info', '⏳ Setting up reminders…');
 
-  async function enableReminders() {
-    showStatus('info', '⏳ Setting up reminders…');
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          showStatus('error', '❌ Notification permission denied. Please allow notifications in your browser settings.');
+          return;
+        }
 
-    try {
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        showStatus('error', '❌ Notification permission denied. Please allow notifications in your browser settings.');
+        const keyRes = await fetch('/api/vapid-key');
+        const { publicKey } = await keyRes.json();
+
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(publicKey),
+        });
+
+        currentSubscription = sub;
+        const waterInterval = parseInt(document.getElementById('waterInterval').value, 10);
+        const stretchInterval = parseInt(document.getElementById('stretchInterval') ? document.getElementById('stretchInterval').value : 0, 10);
+        const medTimes = getMedTimes();
+        const mindfulnessTimes = getMindfulnessTimes();
+        const checkinTime = document.getElementById('checkinTime').value;
+
+        savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime);
+
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            subscription: sub.toJSON(),
+            waterInterval,
+            stretchInterval,
+            medTimes,
+            mindfulnessTimes,
+            checkinTime,
+          }),
+        });
+
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+        setActiveUI(true);
+        showStatus('success', '✅ Reminders enabled! You can close this tab.');
+      } catch (err) {
+        console.error(err);
+        showStatus('error', `❌ Failed: ${err.message}`);
+      }
+    }
+
+    async function disableReminders() {
+      if (!currentSubscription) return;
+
+      const confirmed = confirm('Are you sure you want to disable reminders?');
+      if (!confirmed) {
+        showStatus('info', 'Reminders remain active.');
         return;
       }
 
-      const keyRes = await fetch('/api/vapid-key');
-      const { publicKey } = await keyRes.json();
-
-      const reg = await navigator.serviceWorker.ready;
-      const sub = await reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(publicKey),
-      });
-
-      currentSubscription = sub;
-      const waterInterval = parseInt(document.getElementById('waterInterval').value, 10);
-      const stretchInterval = parseInt(document.getElementById('stretchInterval') ? document.getElementById('stretchInterval').value : 0, 10);
-      const medTimes = getMedTimes();
-      const mindfulnessTimes = getMindfulnessTimes();
-      const checkinTime = document.getElementById('checkinTime').value;
-      savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime);
-
-      const res = await fetch('/api/subscribe', {
+      await fetch('/api/unsubscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          subscription: sub.toJSON(),
-          waterInterval,
-          stretchInterval,
-          medTimes,
-          mindfulnessTimes,
-          checkinTime,
-        }),
+        body: JSON.stringify({ endpoint: currentSubscription.endpoint }),
       });
 
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
-
-      setActiveUI(true);
-      showStatus('success', '✅ Reminders enabled! You can close this tab.');
-    } catch (err) {
-      console.error(err);
-      showStatus('error', `❌ Failed: ${err.message}`);
-    }
-  }
-
-  // ─── Disable Reminders ───────────────────────────────────────────────────
-
-  async function disableReminders() {
-    if (!currentSubscription) return;
-
-    const confirmed = confirm('Are you sure you want to disable reminders?');
-    if (!confirmed) {
-      showStatus('info', 'Reminders remain active.');
-      return;
+      await currentSubscription.unsubscribe();
+      currentSubscription = null;
+      setActiveUI(false);
+      showStatus('info', 'Reminders disabled.');
     }
 
-    await fetch('/api/unsubscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ endpoint: currentSubscription.endpoint }),
-    });
+    function addMedTime(value = '12:00') {
+      const list = document.getElementById('medList');
+      const row = document.createElement('div');
+      row.className = 'med-row';
+      row.innerHTML = `
+        <input type="time" value="${value}" />
+        <button class="btn-icon" type="button" onclick="this.parentElement.remove()" title="Remove">✕</button>
+      `;
+      list.appendChild(row);
+    }
 
-    await currentSubscription.unsubscribe();
-    currentSubscription = null;
-    setActiveUI(false);
-    showStatus('info', 'Reminders disabled.');
-  }
+    function addMindfulnessTime(value = '10:00') {
+      const list = document.getElementById('mindfulnessList');
+      if (!list) return;
+      const row = document.createElement('div');
+      row.className = 'mindfulness-row';
+      row.innerHTML = `
+        <input type="time" value="${value}" />
+        <button class="btn-icon" type="button" onclick="this.parentElement.remove()" title="Remove">✕</button>
+      `;
+      list.appendChild(row);
+    }
 
-  // ─── Medication times UI ─────────────────────────────────────────────────
+    function getMedTimes() {
+      const el = document.querySelectorAll('#medList input[type="time"]');
+      return Array.from(el).map(i => i.value).filter(Boolean);
+    }
 
-  function addMedTime(value = '12:00') {
-    const list = document.getElementById('medList');
-    const row = document.createElement('div');
-    row.className = 'med-row';
-    row.style.display='flex'; row.style.gap='0.5rem'; row.style.marginBottom='0.4rem';
-    row.innerHTML = `
-      <input type="time" value="${value}" />
-      <button class="btn-secondary" onclick="this.parentElement.remove()" title="Remove">✕</button>
-    `;
-    list.appendChild(row);
-  }
+    function getMindfulnessTimes() {
+      const el = document.querySelectorAll('#mindfulnessList input[type="time"]');
+      return Array.from(el).map(i => i.value).filter(Boolean);
+    }
 
-  function addMindfulnessTime(value = '10:00') {
-    const list = document.getElementById('mindfulnessList');
-    if (!list) return;
-    const row = document.createElement('div');
-    row.className = 'med-row';
-    row.style.display='flex'; row.style.gap='0.5rem'; row.style.marginBottom='0.4rem';
-    row.innerHTML = `
-      <input type="time" value="${value}" />
-      <button class="btn-secondary" onclick="this.parentElement.remove()" title="Remove">✕</button>
-    `;
-    list.appendChild(row);
-  }
+    function savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime) {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify({ waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime }));
+    }
 
-  function getMedTimes() {
-    const el = document.querySelectorAll('#medList input[type="time"]');
-    return Array.from(el).map(i=>i.value).filter(Boolean);
-  }
+    function loadPreferences() {
+      try {
+        const stored = localStorage.getItem(SETTINGS_KEY);
+        if (!stored) return;
+        const { waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime } = JSON.parse(stored);
+        if (waterInterval) document.getElementById('waterInterval').value = waterInterval;
+        if (stretchInterval && document.getElementById('stretchInterval')) document.getElementById('stretchInterval').value = stretchInterval;
+        if (Array.isArray(medTimes) && medTimes.length) {
+          const list = document.getElementById('medList');
+          list.innerHTML = '';
+          medTimes.forEach(t => addMedTime(t));
+        }
+        if (Array.isArray(mindfulnessTimes) && mindfulnessTimes.length) {
+          const list = document.getElementById('mindfulnessList');
+          list.innerHTML = '';
+          mindfulnessTimes.forEach(t => addMindfulnessTime(t));
+        }
+        if (checkinTime) document.getElementById('checkinTime').value = checkinTime;
+      } catch (err) {
+        console.warn('Failed to load saved preferences', err);
+      }
+    }
 
-  function getMindfulnessTimes() {
-    const el = document.querySelectorAll('#mindfulnessList input[type="time"]');
-    return Array.from(el).map(i=>i.value).filter(Boolean);
-  }
+    async function fetchAnalytics() {
+      try {
+        const res = await fetch('/api/analytics');
+        const data = await res.json();
+        const area = document.getElementById('analyticsArea');
+        area.innerHTML = '';
+        const entries = Object.entries(data).sort((a, b) => b[1] - a[1]);
+        if (!entries.length) {
+          area.innerHTML = '<small>No data yet</small>';
+          return;
+        }
+        const ul = document.createElement('ul');
+        ul.className = 'clean-list';
+        entries.forEach(([k, v]) => {
+          const li = document.createElement('li');
+          li.textContent = `${k} — ${v}`;
+          ul.appendChild(li);
+        });
+        area.appendChild(ul);
+      } catch (err) {
+        console.warn('analytics fetch failed', err);
+      }
+    }
 
-  function savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime) {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime }));
-  }
+    async function fetchSymptomHistory() {
+      try {
+        const endpoint = currentSubscription ? currentSubscription.endpoint : '';
+        const res = await fetch('/api/symptom-history', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ endpoint })
+        });
+        const data = await res.json();
+        const area = document.getElementById('historyArea');
+        area.innerHTML = '';
+        if (!data || !data.length) {
+          area.innerHTML = '<small>No recent checks</small>';
+          return;
+        }
+        const ul = document.createElement('ul');
+        ul.className = 'clean-list';
+        data.slice().reverse().slice(0, 6).forEach(entry => {
+          const li = document.createElement('li');
+          const t = new Date(entry.timestamp).toLocaleString();
+          li.innerHTML = `<strong style="display:block; margin-bottom:0.2rem; color:#f8fbff;">${t}</strong><small>${entry.symptoms.join(', ')}</small>`;
+          ul.appendChild(li);
+        });
+        area.appendChild(ul);
+      } catch (err) {
+        console.warn('history fetch failed', err);
+      }
+    }
 
-  function loadPreferences() {
-    try {
-      const stored = localStorage.getItem(SETTINGS_KEY);
-      if (!stored) return;
-      const { waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime } = JSON.parse(stored);
-      if (waterInterval) document.getElementById('waterInterval').value = waterInterval;
-      if (stretchInterval && document.getElementById('stretchInterval')) document.getElementById('stretchInterval').value = stretchInterval;
-      if (Array.isArray(medTimes) && medTimes.length) { const list = document.getElementById('medList'); list.innerHTML=''; medTimes.forEach(t=>addMedTime(t)); }
-      if (Array.isArray(mindfulnessTimes) && mindfulnessTimes.length) { const list = document.getElementById('mindfulnessList'); list.innerHTML=''; mindfulnessTimes.forEach(t=>addMindfulnessTime(t)); }
-      if (checkinTime) document.getElementById('checkinTime').value = checkinTime;
-    } catch (err) { console.warn('Failed to load saved preferences', err); }
-  }
+    function setActiveUI(active) {
+      const banner = document.getElementById('activeBanner');
+      if (banner) banner.style.display = active ? 'flex' : 'none';
+      document.getElementById('enableBtn').style.display = active ? 'none' : 'inline-block';
+      document.getElementById('disableBtn').style.display = active ? 'inline-block' : 'none';
+    }
 
-  // ─── Symptom history & analytics ─────────────────────────────────────────
-  async function fetchAnalytics() {
-    try {
-      const res = await fetch('/api/analytics');
-      const data = await res.json();
-      const area = document.getElementById('analyticsArea');
-      area.innerHTML = '';
-      const entries = Object.entries(data).sort((a,b)=>b[1]-a[1]);
-      if (!entries.length) { area.innerHTML = '<small style="color:var(--muted)">No data yet</small>'; return; }
-      const ul = document.createElement('ul'); ul.style.padding=0; ul.style.margin=0; ul.style.listStyle='none';
-      entries.forEach(([k,v])=>{ const li = document.createElement('li'); li.textContent = `${k} — ${v}`; li.style.padding='6px 0'; ul.appendChild(li); });
-      area.appendChild(ul);
-    } catch (err) { console.warn('analytics fetch failed', err); }
-  }
+    function showStatus(type, msg) {
+      const el = document.getElementById('status');
+      if (!el) return;
+      el.className = type;
+      el.textContent = msg;
+    }
 
-  async function fetchSymptomHistory() {
-    try {
-      const endpoint = currentSubscription ? currentSubscription.endpoint : '';
-      const res = await fetch('/api/symptom-history', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({endpoint}) });
-      const data = await res.json();
-      const area = document.getElementById('historyArea'); area.innerHTML='';
-      if (!data || !data.length) { area.innerHTML = '<small style="color:var(--muted)">No recent checks</small>'; return }
-      const ul = document.createElement('ul'); ul.style.padding=0; ul.style.listStyle='none';
-      data.slice().reverse().slice(0,6).forEach(entry=>{ const li = document.createElement('li'); li.style.padding='8px 0'; const t = new Date(entry.timestamp).toLocaleString(); li.innerHTML = `<strong style="display:block">${t}</strong><small style="color:var(--muted)">${entry.symptoms.join(', ')}</small>`; ul.appendChild(li); });
-      area.appendChild(ul);
-    } catch (err) { console.warn('history fetch failed', err); }
-  }
+    function urlBase64ToUint8Array(base64String) {
+      const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+      const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+      const raw = atob(base64);
+      return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+    }
 
-  // ─── UI Helpers ──────────────────────────────────────────────────────────
-  function setActiveUI(active) {
-    const b = document.getElementById('activeBanner'); if (!b) return; b.style.display = active ? 'flex' : 'none';
-    document.getElementById('enableBtn').style.display  = active ? 'none' : 'inline-block';
-    document.getElementById('disableBtn').style.display = active ? 'inline-block' : 'none';
-  }
+    function watchServiceWorker(reg) {
+      if (!reg) return;
+      if (reg.waiting) showUpdateReady();
+      reg.addEventListener('updatefound', () => {
+        const worker = reg.installing;
+        if (!worker) return;
+        worker.addEventListener('statechange', () => {
+          if (worker.state === 'installed' && navigator.serviceWorker.controller) showUpdateReady();
+        });
+      });
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+    }
 
-  function showStatus(type, msg) { const el = document.getElementById('status'); if(!el) return; el.className = type; el.textContent = msg; }
+    function showUpdateReady() {
+      showStatus('info', 'A new version is available. Refresh to use it.');
+      const rb = document.getElementById('reloadBtn');
+      if (rb) rb.style.display = 'block';
+    }
 
-  function urlBase64ToUint8Array(base64String) { const padding = '='.repeat((4 - (base64String.length % 4)) % 4); const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/'); const raw = atob(base64); return Uint8Array.from([...raw].map(c => c.charCodeAt(0))); }
+    function reloadPage() {
+      navigator.serviceWorker.ready.then(reg => {
+        if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+      });
+    }
 
-  function watchServiceWorker(reg) { if (!reg) return; if (reg.waiting) showUpdateReady(); reg.addEventListener('updatefound', ()=>{ const worker = reg.installing; if (!worker) return; worker.addEventListener('statechange', ()=>{ if (worker.state === 'installed' && navigator.serviceWorker.controller) showUpdateReady(); }); }); let refreshing=false; navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if (refreshing) return; refreshing=true; window.location.reload(); }); }
+    (function initDashboardExtras() {
+      fetchAnalytics();
+      fetchSymptomHistory();
+      setInterval(fetchAnalytics, 60 * 1000);
+    })();
 
-  function showUpdateReady(){ showStatus('info','A new version is available. Refresh to use it.'); const rb = document.getElementById('reloadBtn'); if(rb) rb.style.display='block'; }
-
-  function reloadPage(){ navigator.serviceWorker.ready.then(reg=>{ if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'}); }); }
-
-  // Kick off analytics and history fetches
-  (function initDashboardExtras(){ fetchAnalytics(); fetchSymptomHistory(); setInterval(fetchAnalytics, 60*1000); })();
-  
-  // Initialize service worker subscription state
-  (async function init(){ if('serviceWorker' in navigator){ try{ const reg = await navigator.serviceWorker.register('/sw.js'); const ready = await navigator.serviceWorker.ready; currentSubscription = await ready.pushManager.getSubscription().catch(()=>null); loadPreferences(); watchServiceWorker(reg); }catch(e){console.warn('sw register failed',e);} }})();
+    (async function init() {
+      if ('serviceWorker' in navigator) {
+        try {
+          const reg = await navigator.serviceWorker.register('/sw.js');
+          const ready = await navigator.serviceWorker.ready;
+          currentSubscription = await ready.pushManager.getSubscription().catch(() => null);
+          loadPreferences();
+          setActiveUI(!!currentSubscription);
+          watchServiceWorker(reg);
+        } catch (e) {
+          console.warn('sw register failed', e);
+        }
+      }
+    })();
   </script>
 </body>
 </html>
-  // ─── Enable Reminders ────────────────────────────────────────────────────
-
-  async function enableReminders() {
-    showStatus('info', '⏳ Setting up reminders…');
-
-    try {
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        showStatus('error', '❌ Notification permission denied. Please allow notifications in your browser settings.');
-        return;
-      }
-
-      const keyRes = await fetch('/api/vapid-key');
-      const { publicKey } = await keyRes.json();
-
-      const reg = await navigator.serviceWorker.ready;
-      const sub = await reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(publicKey),
-      });
-
-      currentSubscription = sub;
-      const waterInterval = parseInt(document.getElementById('waterInterval').value, 10);
-      const stretchInterval = parseInt(document.getElementById('stretchInterval').value, 10);
-      const medTimes = getMedTimes();
-      const mindfulnessTimes = getMindfulnessTimes();
-      const checkinTime = document.getElementById('checkinTime').value;
-      savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime);
-
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          subscription: sub.toJSON(),
-          waterInterval,
-          stretchInterval,
-          medTimes,
-          mindfulnessTimes,
-          checkinTime,
-        }),
-      });
-
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
-
-      setActiveUI(true);
-      showStatus('success', '✅ Reminders enabled! You can close this tab.');
-    } catch (err) {
-      console.error(err);
-      showStatus('error', `❌ Failed: ${err.message}`);
-    }
-  }
-
-  // ─── Disable Reminders ───────────────────────────────────────────────────
-
-  async function disableReminders() {
-    if (!currentSubscription) return;
-
-    const confirmed = confirm('Are you sure you want to disable reminders?');
-    if (!confirmed) {
-      showStatus('info', 'Reminders remain active.');
-      return;
-    }
-
-    await fetch('/api/unsubscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ endpoint: currentSubscription.endpoint }),
-    });
-
-    await currentSubscription.unsubscribe();
-    currentSubscription = null;
-    setActiveUI(false);
-    showStatus('info', 'Reminders disabled.');
-  }
-
-  // ─── Medication times UI ─────────────────────────────────────────────────
-
-  function addMedTime(value = '12:00') {
-    const list = document.getElementById('medList');
-    const row = document.createElement('div');
-    row.className = 'med-row';
-    row.innerHTML = `
-      <input type="time" value="${value}" />
-      <button class="btn-icon" onclick="this.parentElement.remove()" title="Remove">✕</button>
-    `;
-    list.appendChild(row);
-  }
-
-  function addMindfulnessTime(value = '10:00') {
-    const list = document.getElementById('mindfulnessList');
-    const row = document.createElement('div');
-    row.className = 'med-row';
-    row.innerHTML = `
-      <input type="time" value="${value}" />
-      <button class="btn-icon" onclick="this.parentElement.remove()" title="Remove">✕</button>
-    `;
-    list.appendChild(row);
-  }
-
-  function getMedTimes() {
-    return Array.from(document.querySelectorAll('#medList input[type="time"]'))
-      .map(i => i.value)
-      .filter(Boolean);
-  }
-
-  function getMindfulnessTimes() {
-    return Array.from(document.querySelectorAll('#mindfulnessList input[type="time"]'))
-      .map(i => i.value)
-      .filter(Boolean);
-  }
-
-  function savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime) {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({
-      waterInterval,
-      stretchInterval,
-      medTimes,
-      mindfulnessTimes,
-      checkinTime,
-    }));
-  }
-
-  function loadPreferences() {
-    try {
-      const stored = localStorage.getItem(SETTINGS_KEY);
-      if (!stored) return;
-      const { waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime } = JSON.parse(stored);
-      if (waterInterval) {
-        document.getElementById('waterInterval').value = waterInterval;
-      }
-      if (stretchInterval) {
-        document.getElementById('stretchInterval').value = stretchInterval;
-      }
-      if (Array.isArray(medTimes) && medTimes.length) {
-        const list = document.getElementById('medList');
-        list.innerHTML = '';
-        medTimes.forEach(time => addMedTime(time));
-      }
-      if (Array.isArray(mindfulnessTimes) && mindfulnessTimes.length) {
-        const list = document.getElementById('mindfulnessList');
-        list.innerHTML = '';
-        mindfulnessTimes.forEach(time => addMindfulnessTime(time));
-      }
-      if (checkinTime) {
-        document.getElementById('checkinTime').value = checkinTime;
-      }
-      
-    } catch (err) {
-      console.warn('Failed to load saved preferences', err);
-    }
-  }
-
-  // ─── Symptom history & analytics ─────────────────────────────────────────
-  async function fetchAnalytics() {
-    try {
-      const res = await fetch('/api/analytics');
-      const data = await res.json();
-      const area = document.getElementById('analyticsArea');
-      area.innerHTML = '';
-      const entries = Object.entries(data).sort((a,b)=>b[1]-a[1]);
-      if (!entries.length) {
-        area.innerHTML = '<small style="color:var(--muted)">No data yet</small>';
-        return;
-      }
-      const ul = document.createElement('ul');
-      ul.style.listStyle='none'; ul.style.padding=0; ul.style.margin=0;
-      entries.forEach(([k,v])=>{
-        const li = document.createElement('li');
-        li.textContent = `${k} — ${v}`;
-        li.className = 'history-item';
-        ul.appendChild(li);
-      });
-      area.appendChild(ul);
-    } catch (err) {
-      console.warn('analytics fetch failed', err);
-    }
-  }
-
-  async function fetchSymptomHistory() {
-    try {
-      const endpoint = currentSubscription ? currentSubscription.endpoint : '';
-      const res = await fetch('/api/symptom-history', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({endpoint}) });
-      const data = await res.json();
-      const area = document.getElementById('historyArea');
-      area.innerHTML = '';
-      if (!data || !data.length) { area.innerHTML = '<small style="color:var(--muted)">No recent checks</small>'; return }
-      const ul = document.createElement('ul'); ul.style.padding=0; ul.style.listStyle='none';
-      data.slice().reverse().slice(0,6).forEach(entry=>{
-        const li = document.createElement('li');
-        li.className='history-item';
-        const t = new Date(entry.timestamp).toLocaleString();
-        li.innerHTML = `<strong style="display:block">${t}</strong><small style="color:var(--muted)">${entry.symptoms.join(', ')}</small>`;
-        ul.appendChild(li);
-      });
-      area.appendChild(ul);
-    } catch (err) {
-      console.warn('history fetch failed', err);
-    }
-  }
-
-   // ─── UI Helpers ──────────────────────────────────────────────────────────
-
-  function setActiveUI(active) {
-    document.getElementById('activeBanner').style.display = active ? 'flex' : 'none';
-    document.getElementById('enableBtn').style.display  = active ? 'none' : 'block';
-    document.getElementById('disableBtn').style.display = active ? 'block' : 'none';
-  }
-
-  function showStatus(type, msg) {
-    const el = document.getElementById('status');
-    el.className = type;
-    el.textContent = msg;
-  }
-
-  function urlBase64ToUint8Array(base64String) {
-    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-    const raw = atob(base64);
-    return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
-  }
-
-  function watchServiceWorker(reg) {
-    if (!reg) return;
-
-    if (reg.waiting) {
-      showUpdateReady();
-    }
-
-    reg.addEventListener('updatefound', () => {
-      const worker = reg.installing;
-      if (!worker) return;
-      worker.addEventListener('statechange', () => {
-        if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-          showUpdateReady();
-        }
-      });
-    });
-
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (refreshing) return;
-      refreshing = true;
-      window.location.reload();
-    });
-  }
-
-  function showUpdateReady() {
-    showStatus('info', 'A new version is available. Refresh to use it.');
-    document.getElementById('reloadBtn').style.display = 'block';
-  }
-
-  function reloadPage() {
-    const registration = navigator.serviceWorker.ready;
-    registration.then(reg => {
-      if (reg.waiting) {
-        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-      }
-    });
-  }
-
-  // Kick off analytics and history fetches
-  (function initDashboardExtras(){
-    fetchAnalytics();
-    fetchSymptomHistory();
-    setInterval(fetchAnalytics, 60*1000);
-  })();
-</script>
-</body>
-</html>
-
-
-    
-  
