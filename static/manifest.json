@@ -1,0 +1,16 @@
+{
+  "name": "WellRemind",
+  "short_name": "WellRemind",
+  "description": "Hydration and medication reminders in your browser.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}

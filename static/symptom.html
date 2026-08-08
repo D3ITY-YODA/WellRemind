@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Symptom Checker — WellRemind</title>
+  <link rel="icon" href="/icon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f4fbf8;--accent:#2b9d7a;--muted:#476b63;--card:#fff;--radius:14px;--danger:#ff6b6b}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,'DM Sans',sans-serif;background:linear-gradient(180deg,#f7fffb 0%,var(--bg)100%);color:#05241a;padding:2rem 1rem;display:flex;justify-content:center}
+    .wrap{width:100%;max-width:720px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    a.back{color:var(--muted);text-decoration:none;padding:.5rem;border-radius:8px}
+    a.back:hover{background:rgba(43,157,122,0.06);color:var(--accent)}
+    h1{margin:0;font-family:'DM Serif Display',serif}
+    .card{background:var(--card);border-radius:var(--radius);padding:1.25rem;box-shadow:0 8px 28px rgba(17,62,52,0.06);border:1px solid rgba(5,36,26,0.06)}
+    .symptoms{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+    .symptoms label{display:flex;align-items:center;gap:.5rem;padding:.45rem;border-radius:10px;border:1px solid rgba(7,40,34,0.04);cursor:pointer}
+    .symptoms input{width:18px;height:18px}
+    .actions{display:flex;gap:.75rem;align-items:center;margin-top:1rem}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#7cc6b6);color:#fff;padding:.75rem 1rem;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+    .result{margin-top:1rem;padding:1rem;border-radius:10px;background:#fbfffb;border:1px solid rgba(43,157,122,0.06)}
+    .urgent{background:linear-gradient(90deg,#ffdede,#ffb3b3);border:1px solid rgba(255,107,107,0.15);padding:.8rem;border-radius:10px;color:var(--danger);font-weight:700}
+    .disclaimer{margin-top:.75rem;color:var(--muted);font-size:.9rem}
+    @media(max-width:600px){.symptoms{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="back" href="/">← Dashboard</a>
+      <h1>Symptom Checker</h1>
+      <div></div>
+    </header>
+
+    <div class="card">
+      <p style="margin-top:0;margin-bottom:.75rem;color:var(--muted)">Select the symptoms you're experiencing. The tool provides general explanations commonly associated with symptom clusters and suggests next steps.</p>
+
+      <div class="symptoms" id="symptomList">
+        <label><input type="checkbox" value="fever"> Fever</label>
+        <label><input type="checkbox" value="cough"> Cough</label>
+        <label><input type="checkbox" value="sore throat"> Sore throat</label>
+        <label><input type="checkbox" value="headache"> Headache</label>
+        <label><input type="checkbox" value="fatigue"> Fatigue</label>
+        <label><input type="checkbox" value="nausea"> Nausea</label>
+        <label><input type="checkbox" value="dizziness"> Dizziness</label>
+        <label><input type="checkbox" value="thirst"> Thirst</label>
+        <label><input type="checkbox" value="abdominal pain"> Abdominal pain</label>
+        <label><input type="checkbox" value="diarrhea"> Diarrhea</label>
+        <label><input type="checkbox" value="chest pain"> Chest pain</label>
+        <label><input type="checkbox" value="shortness of breath"> Shortness of breath</label>
+        <label><input type="checkbox" value="difficulty breathing"> Difficulty breathing</label>
+        <label><input type="checkbox" value="severe abdominal pain"> Severe abdominal pain</label>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" id="checkBtn">Check Symptoms</button>
+        <button class="btn-secondary" id="clearBtn" onclick="clearSelection()">Clear</button>
+      </div>
+
+      <div id="resultArea"></div>
+      <div class="disclaimer">This tool offers general guidance and is not medical advice. If you are concerned, contact a healthcare professional.</div>
+    </div>
+  </div>
+
+  <script>
+    const checkBtn = document.getElementById('checkBtn');
+    const resultArea = document.getElementById('resultArea');
+    let currentSubscription = null;
+
+    async function init() {
+      if ('serviceWorker' in navigator) {
+        const reg = await navigator.serviceWorker.register('/sw.js').catch(()=>null);
+        if (reg) {
+          const ready = await navigator.serviceWorker.ready;
+          currentSubscription = await ready.pushManager.getSubscription().catch(()=>null);
+        }
+      }
+    }
+
+    function getSelectedSymptoms() {
+      return Array.from(document.querySelectorAll('#symptomList input[type="checkbox"]'))
+        .filter(i => i.checked)
+        .map(i => i.value);
+    }
+
+    function clearSelection(){
+      document.querySelectorAll('#symptomList input[type="checkbox"]').forEach(i=>i.checked=false);
+      resultArea.innerHTML = '';
+    }
+
+    checkBtn.addEventListener('click', async ()=>{
+      const symptoms = getSelectedSymptoms();
+      if (!symptoms.length) {
+        resultArea.innerHTML = '<div style="color:#b45309">Please select at least one symptom.</div>';
+        return;
+      }
+      resultArea.innerHTML = '<div style="color:var(--muted)">Assessing…</div>';
+      const endpoint = currentSubscription ? currentSubscription.endpoint : '';
+      try {
+        const res = await fetch('/api/check-symptoms', {
+          method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({endpoint, symptoms})
+        });
+        const data = await res.json();
+        renderResult(data);
+      } catch (err) {
+        console.error(err);
+        resultArea.innerHTML = '<div style="color:#991b1b">Failed to check symptoms.</div>';
+      }
+    });
+
+    function renderResult(data){
+      let html = '';
+      if (data.urgent) {
+        html += `<div class="urgent">⚠️ ${data.condition} — Seek immediate medical care.</div>`;
+      }
+      html += `<div class="result"><strong>${data.condition}</strong><p style="margin:.5rem 0;color:var(--muted)">${data.rationale || ''}</p><p style="margin:.4rem 0">${data.advice}</p>`;
+      if (data.history && data.history.length){ html += `<p style="margin-top:.6rem;color:var(--muted)">Recent checks: ${data.history.length}</p>` }
+      html += `</div>`;
+      html += `<div style="margin-top:.6rem;color:var(--muted);font-size:.9rem">${data.note}</div>`;
+      resultArea.innerHTML = html;
+      window.scrollTo({top: resultArea.offsetTop - 20, behavior:'smooth'});
+    }
+
+    init();
+  </script>
+</body>
+</html>
