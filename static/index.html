@@ -3,44 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WellRemind</title>
+  <title>WellRemind</title></head>
   <link rel="icon" href="/icon.svg" />
   <link rel="manifest" href="/manifest.json" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;</title>500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #07111c;
-      --bg-soft: #0d1724;
-      --panel: rgba(10, 18, 30, 0.9);
+      --panel: rgba(10</style>, 18, 30, 0.9);
       --panel-elevated: rgba(15, 25, 40, 0.96);
-      --panel-light: rgba(148, 163, 184, 0.08);
       --text: #e5edf5;
       --text-strong: #f8fbff;
       --muted: #94a3b8;
       --border: rgba(148, 163, 184, 0.16);
       --border-strong: rgba(148, 163, 184, 0.24);
       --accent: #38bdf8;
-      --accent-deep: #0ea5e9;
       --medical: #22c55e;
       --medical-soft: rgba(34, 197, 94, 0.12);
-      --gold: #cbd5e1;
       --danger: #fb7185;
-      --shadow-xl: 0 28px 80px rgba(2, 8, 23, 0.5);
       --shadow-lg: 0 18px 46px rgba(2, 8, 23, 0.36);
       --radius-xl: 28px;
       --radius-lg: 22px;
-      --radius-md: 16px;
       --max-width: 1200px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
@@ -52,31 +39,20 @@
         linear-gradient(180deg, #030712 0%, #07111c 45%, #0b1422 100%);
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(rgba(255,255,255,0.015), rgba(255,255,255,0.015));
-      mask-image: radial-gradient(circle at center, black, transparent 85%);
-      opacity: 0.8;
-    }
-
     .page {
       width: min(calc(100% - 1.5rem), var(--max-width));
       margin: 0 auto;
       padding: 1.3rem 0 3rem;
-      position: relative;
-      z-index: 1;
     }
 
-    .topbar {
+    .topbar, .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1.4rem;
     }
+
+    .topbar { margin-bottom: 1.4rem; }
 
     .brand {
       display: flex;
@@ -91,25 +67,21 @@
       display: grid;
       place-items: center;
       font-weight: 800;
-      letter-spacing: 0.04em;
       color: var(--text-strong);
       background: linear-gradient(145deg, #0f3d56, #0b2032);
       border: 1px solid rgba(148, 163, 184, 0.18);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 12px 30px rgba(0,0,0,0.3);
     }
 
-    .brand-copy h1 {
+    .brand-copy h1, .panel-header h3, .feature-card h4, .sidebar-card h4 {
       margin: 0;
-      font-size: 1.08rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
       color: var(--text-strong);
     }
 
-    .brand-copy p {
-      margin: 0.2rem 0 0;
+    .brand-copy p, .panel-header p, .feature-card p, .sidebar-card small {
       color: var(--muted);
-      font-size: 0.9rem;
+      margin: 0.25rem 0 0;
+      line-height: 1.6;
     }
 
     .top-link {
@@ -120,13 +92,6 @@
       border-radius: 999px;
       border: 1px solid var(--border);
       background: rgba(56, 189, 248, 0.08);
-      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .top-link:hover {
-      transform: translateY(-1px);
-      border-color: rgba(56, 189, 248, 0.3);
-      background: rgba(56, 189, 248, 0.14);
     }
 
     .hero {
@@ -143,34 +108,18 @@
       border: 1px solid var(--border);
       box-shadow: var(--shadow-lg);
       backdrop-filter: blur(18px);
+      border-radius: var(--radius-xl);
     }
 
     .hero-copy {
-      position: relative;
-      overflow: hidden;
       padding: 3rem;
-      border-radius: var(--radius-xl);
       background:
         radial-gradient(circle at top right, rgba(56, 189, 248, 0.14), transparent 30%),
         linear-gradient(160deg, rgba(7, 17, 28, 0.98) 0%, rgba(10, 24, 38, 0.98) 52%, rgba(12, 33, 49, 0.98) 100%);
     }
 
-    .hero-copy::after {
-      content: "";
-      position: absolute;
-      right: -60px;
-      bottom: -80px;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 68%);
-      pointer-events: none;
-    }
-
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
+      display: inline-block;
       padding: 0.45rem 0.8rem;
       border-radius: 999px;
       border: 1px solid rgba(56, 189, 248, 0.18);
@@ -193,7 +142,7 @@
       color: var(--text-strong);
     }
 
-    .hero-copy .lead {
+    .lead {
       max-width: 58ch;
       margin: 1.2rem 0 0;
       font-size: 1.03rem;
@@ -201,63 +150,34 @@
       color: #bfd0df;
     }
 
-    .hero-stats {
+    .hero-stats,
+    .dashboard-lower,
+    .analytics-grid,
+    .form-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
-      margin-top: 1.8rem;
+      gap: 1rem;
     }
 
-    .stat {
-      padding: 1rem;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(148, 163, 184, 0.14);
-    }
+    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.8rem; }
+    .dashboard-lower { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.2rem; }
+    .analytics-grid { grid-template-columns: 1fr 1fr; margin-top: 1.2rem; }
 
-    .stat strong {
-      display: block;
-      color: var(--text-strong);
-      font-size: 0.98rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .stat span {
-      color: #afc2d2;
-      font-size: 0.88rem;
-      line-height: 1.6;
-    }
-
+    .stat,
+    .card,
+    .feature-card,
+    .sidebar-card,
     .setup-panel {
-      border-radius: var(--radius-xl);
-      padding: 1.25rem;
       background: var(--panel);
     }
 
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
+    .setup-panel { padding: 1.25rem; }
+    .card, .feature-card, .sidebar-card { padding: 1.1rem; border-radius: var(--radius-lg); border: 1px solid var(--border); }
+    .stat { padding: 1rem; border-radius: 18px; border: 1px solid rgba(148, 163, 184, 0.14); background: rgba(255,255,255,0.035); }
 
-    .panel-header h3 {
-      margin: 0 0 0.35rem;
-      color: var(--text-strong);
-      font-size: 1.25rem;
-      line-height: 1.2;
-    }
-
-    .panel-header p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.93rem;
-      line-height: 1.6;
-    }
+    .stat strong { display: block; color: var(--text-strong); margin-bottom: 0.3rem; }
+    .stat span { color: #afc2d2; font-size: 0.88rem; line-height: 1.6; }
 
     .pill {
-      white-space: nowrap;
       padding: 0.52rem 0.8rem;
       border-radius: 999px;
       border: 1px solid rgba(34, 197, 94, 0.18);
@@ -267,6 +187,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
     .active-banner {
@@ -285,38 +206,7 @@
       height: 11px;
       background: var(--medical);
       border-radius: 50%;
-      flex-shrink: 0;
       box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.1);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
-    }
-
-    .active-banner strong {
-      display: block;
-      margin-bottom: 0.15rem;
-      color: #dcfce7;
-    }
-
-    .active-banner div:last-child {
-      color: #b7d9c1;
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .card {
-      background: var(--panel-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.1rem;
     }
 
     .card-title {
@@ -329,7 +219,7 @@
       margin-bottom: 0.95rem;
     }
 
-    .card-icon {
+    .card-icon, .feature-icon {
       width: 38px;
       height: 38px;
       border-radius: 12px;
@@ -337,8 +227,9 @@
       place-items: center;
       background: rgba(56, 189, 248, 0.08);
       border: 1px solid rgba(56, 189, 248, 0.14);
-      font-size: 1rem;
     }
+
+    .feature-icon { margin-bottom: 0.8rem; }
 
     label {
       display: block;
@@ -350,8 +241,7 @@
       letter-spacing: 0.08em;
     }
 
-    select,
-    input[type="time"] {
+    select, input[type="time"] {
       width: 100%;
       border: 1px solid var(--border-strong);
       border-radius: 14px;
@@ -359,45 +249,23 @@
       font: inherit;
       color: var(--text);
       background: #0b1522;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    select:focus,
-    input[type="time"]:focus {
-      outline: none;
-      border-color: rgba(56, 189, 248, 0.45);
-      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
-      background: #0d1928;
-    }
+    .subtle { margin-top: 0.55rem; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
 
-    .subtle {
-      margin-top: 0.55rem;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }
-
-    .med-row,
-    .mindfulness-row {
+    .med-row, .mindfulness-row {
       display: flex;
       gap: 0.55rem;
       align-items: center;
       margin-bottom: 0.55rem;
     }
 
-    .med-row input,
-    .mindfulness-row input {
-      flex: 1;
-      margin: 0;
-    }
+    .med-row input, .mindfulness-row input { flex: 1; }
 
-    .btn-icon,
-    .btn-secondary,
-    .btn-primary {
+    .btn-icon, .btn-secondary, .btn-primary {
       font: inherit;
       border-radius: 14px;
       cursor: pointer;
-      transition: transform 0.16s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
 
     .btn-icon {
@@ -408,29 +276,12 @@
       color: var(--text);
     }
 
-    .btn-icon:hover {
-      background: rgba(251, 113, 133, 0.08);
-      border-color: rgba(251, 113, 133, 0.2);
-      color: #fecdd3;
-    }
-
-    .inline-add {
-      margin-top: 0.55rem;
-    }
-
     .btn-secondary {
       border: 1px solid var(--border-strong);
       background: #0f1a2a;
       color: #d5e3ef;
       padding: 0.8rem 0.95rem;
       font-weight: 600;
-    }
-
-    .btn-secondary:hover {
-      transform: translateY(-1px);
-      border-color: rgba(56, 189, 248, 0.26);
-      background: #122033;
-      color: #ffffff;
     }
 
     .btn-primary {
@@ -442,17 +293,6 @@
       box-shadow: 0 16px 34px rgba(14, 165, 233, 0.2);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 20px 40px rgba(14, 165, 233, 0.24);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
     .actions {
       display: flex;
       flex-wrap: wrap;
@@ -460,10 +300,7 @@
       margin-top: 0.25rem;
     }
 
-    .actions .btn-primary,
-    .actions .btn-secondary {
-      flex: 1 1 180px;
-    }
+    .actions .btn-primary, .actions .btn-secondary { flex: 1 1 180px; }
 
     #status {
       min-height: 1.25rem;
@@ -476,88 +313,12 @@
       border: 1px solid transparent;
     }
 
-    #status.success {
-      display: block;
-      background: rgba(34, 197, 94, 0.12);
-      color: #c7f9d8;
-      border-color: rgba(34, 197, 94, 0.18);
-    }
+    #status.success { display: block; background: rgba(34, 197, 94, 0.12); color: #c7f9d8; border-color: rgba(34, 197, 94, 0.18); }
+    #status.error { display: block; background: rgba(251, 113, 133, 0.12); color: #ffd7df; border-color: rgba(251, 113, 133, 0.18); }
+    #status.info { display: block; background: rgba(56, 189, 248, 0.12); color: #d7f3ff; border-color: rgba(56, 189, 248, 0.18); }
 
-    #status.error {
-      display: block;
-      background: rgba(251, 113, 133, 0.12);
-      color: #ffd7df;
-      border-color: rgba(251, 113, 133, 0.18);
-    }
-
-    #status.info {
-      display: block;
-      background: rgba(56, 189, 248, 0.12);
-      color: #d7f3ff;
-      border-color: rgba(56, 189, 248, 0.18);
-    }
-
-    .dashboard-lower,
-    .analytics-grid {
-      display: grid;
-      gap: 1rem;
-      margin-top: 1.2rem;
-    }
-
-    .dashboard-lower {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .analytics-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .feature-card,
-    .sidebar-card {
-      border-radius: var(--radius-lg);
-      padding: 1.15rem;
-      background: rgba(10, 18, 30, 0.82);
-    }
-
-    .feature-card h4,
-    .sidebar-card h4 {
-      margin: 0 0 0.55rem;
-      color: var(--text-strong);
-      font-size: 1rem;
-    }
-
-    .feature-card p,
-    .sidebar-card p,
-    .sidebar-card small {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.92rem;
-    }
-
-    .feature-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.14);
-      margin-bottom: 0.8rem;
-      font-size: 1.05rem;
-    }
-
-    ul.clean-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    ul.clean-list li + li {
-      margin-top: 0.6rem;
-      padding-top: 0.6rem;
-      border-top: 1px solid rgba(148, 163, 184, 0.12);
-    }
+    ul.clean-list { list-style: none; padding: 0; margin: 0; }
+    ul.clean-list li + li { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid rgba(148, 163, 184, 0.12); }
 
     footer {
       text-align: center;
@@ -567,40 +328,16 @@
     }
 
     @media (max-width: 980px) {
-      .hero,
-      .dashboard-lower,
-      .analytics-grid,
-      .hero-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-copy {
-        padding: 2rem;
-      }
+      .hero, .dashboard-lower, .analytics-grid, .hero-stats { grid-template-columns: 1fr; }
+      .hero-copy { padding: 2rem; }
     }
 
     @media (max-width: 640px) {
-      .page {
-        width: min(calc(100% - 1rem), var(--max-width));
-      }
-
-      .topbar,
-      .panel-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .hero-copy {
-        padding: 1.5rem;
-      }
-
-      .hero-copy h2 {
-        font-size: 2.75rem;
-      }
-
-      .actions {
-        flex-direction: column;
-      }
+      .page { width: min(calc(100% - 1rem), var(--max-width)); }
+      .topbar, .panel-header, .actions { flex-direction: column; align-items: flex-start; }
+      .hero-copy { padding: 1.5rem; }
+      .hero-copy h2 { font-size: 2.75rem; }
+      .actions .btn-primary, .actions .btn-secondary { width: 100%; }
     }
   </style>
 </head>
@@ -612,18 +349,16 @@
         <div class="brand-copy">
           <h1>WellRemind</h1>
           <p>Professional wellness reminders</p>
-        </div>
+        </div</body>>
       </div>
       <a class="top-link" href="/symptom-checker">Symptom Checker</a>
     </header>
 
     <section class="hero">
-      <div class="hero-copy">
+      <div class</h1></p>="hero-copy">
         <div class="eyebrow">Clinical clarity • Daily consistency</div>
         <h2>Stay consistent with the care routines that matter.</h2>
-        <p class="lead">
-          WellRemind provides a refined reminder experience for hydration, medication, mindfulness, and daily check-ins — presented in a focused interface designed to feel dependable, discreet, and professional.
-        </p>
+        <p class="lead">WellRemind provides a refined reminder experience for hydration, medication, mindfulness, and daily check-ins — designed to feel dependable</h2>, discreet, and professional.</p>
 
         <div class="hero-stats">
           <div class="stat">
@@ -632,92 +367,71 @@
           </div>
           <div class="stat">
             <strong>Reliable alerts</strong>
-            <span>Receive background notifications for medications and healthy daily habits.</span>
+            <span>Receive background notifications for medications and healthy daily habits.</span></strong></span>
           </div>
           <div class="stat">
             <strong>Track symptoms</strong>
             <span>Review recent symptom checks and simple usage trends at a glance.</span>
           </div>
-        </div>
+</strong></span>        </div>
       </div>
 
       <div class="setup-panel">
         <div class="panel-header">
-          <div>
+          <div</strong>>
             <h3>Configure your wellness schedule</h3>
-            <p>Choose your preferred timing once, then let reminders support your day quietly in the background.</p>
+</span>            <p>Choose your preferred timing once, then let reminders support your day quietly in the background.</p>
           </div>
           <div class="pill">Secure browser setup</div>
         </div>
 
-        <div class="active-banner" id="activeBanner">
+        <</h3></p>div class="active-banner" id="activeBanner">
           <div class="dot"></div>
-          <div>
-            <strong>Reminders active.</strong>
-            You'll be notified in the background.
-          </div>
+          <div><strong>Reminders active.</strong> You'll be notified in the background.</div>
         </div>
 
         <div class="form-grid">
           <section class="card">
-            <div class="card-title">
-              <div class="card-icon">💧</div>
-              <span>Hydration Reminder</span>
-            </div>
+            <div class="card-title</strong>"><div class="card-icon">💧</div><span>Hydration Reminder</span></div>
             <label for="waterInterval">Remind me every</label>
             <select id="waterInterval">
               <option value="0">— Off —</option>
-              <option value="30">30 minutes</option>
+              <option value="30">30 minutes</option></span>
               <option value="60" selected>1 hour</option>
               <option value="90">1.5 hours</option>
               <option value="120">2 hours</option>
               <option value="180">3 hours</option>
             </select>
-            <p class="subtle">Helpful for workdays, recovery routines, and long periods of focused activity.</p>
+            <p class="subtle">Helpful for workdays, recovery routines, and long periods</option> of focused activity.</p>
           </section>
 
           <section class="card">
-            <div class="card-title">
-              <div class="card-icon">💊</div>
-              <span>Medication Reminders</span>
-            </div>
+            <div class="card-title"><div class="card-icon">💊</div><span>Medication Reminders</span></div>
             <label>Remind me at these times</label>
             <div id="medList">
-              <div class="med-row">
-                <input type="time" value="08:00" />
-              </div>
+              <div class="med-row"><input type="time" value="08:00" /></div>
             </div>
-            <div class="inline-add">
-              <button class="btn-secondary" type="button" onclick="addMedTime()">＋ Add time</button>
-            </div>
+            <</span>div class="inline-add"><button class="btn-secondary" type="button" onclick</label>="addMedTime()">＋ Add time</button></div>
           </section>
 
           <section class="card">
-            <div class="card-title">
-              <div class="card-icon">🧘</div>
-              <span>Mindfulness Prompts</span>
-            </div>
+            <div class="card-title"><div class="card-icon">🧘</div><span>Mindfulness Prompts</span></div>
             <label>Pause and reset at</label>
             <div id="mindfulnessList"></div>
-            <div class="inline-add">
-              <button class="btn-secondary" type="button" onclick="addMindfulnessTime()">＋ Add mindfulness time</button>
-            </div>
+            <div class="inline-add"><button class="btn-secondary"</span> type="button" onclick="addMindfulnessTime()">＋</label> Add mindfulness time</button></div>
           </section>
 
           <section class="card">
-            <div class="card-title">
-              <div class="card-icon">📝</div>
-              <span>Daily Check-in</span>
-            </div>
+            <div class="card-title"><div class="card-icon">📝</div><span>Daily Check-in</span></div>
             <label for="checkinTime">Check in at</label>
             <input id="checkinTime" type="time" value="18:00" />
-            <p class="subtle">Set a consistent time to reflect on symptoms, energy, and overall wellbeing.</p>
+            <p class="subtle">Set a consistent time to</span> reflect on symptoms, energy, and overall wellbeing.</p>
           </section>
         </div>
 
         <div class="actions">
-          <button class="btn-primary" id="enableBtn" type="button" onclick="enableReminders()">Enable Reminders</button>
-          <button class="btn-secondary" id="disableBtn" type="button" onclick="disableReminders()" style="display:none">Disable Reminders</button>
+          <button class="btn-primary" id="enableBtn" type="button">Enable Reminders</button>
+          <button class="btn-secondary" id="disableBtn" type="button" style="display:none">Disable Reminders</button>
         </div>
 
         <div id="status"></div>
@@ -728,16 +442,14 @@
       <article class="feature-card">
         <div class="feature-icon">🔔</div>
         <h4>Background notifications</h4>
-        <p>Designed to provide discreet reminders without distracting from your work, routine, or recovery.</p>
+        <</h4>p>Designed to provide discreet reminders without distracting from your work, routine, or recovery.</p>
       </article>
-
       <article class="feature-card">
         <div class="feature-icon">🩺</div>
         <h4>Professional presentation</h4>
         <p>A darker premium interface with a calmer visual tone and stronger information hierarchy.</p>
       </article>
-
-      <article class="feature-card">
+</h4>      <article class="feature-card">
         <div class="feature-icon">📊</div>
         <h4>At-a-glance monitoring</h4>
         <p>Recent symptom checks and analytics stay visible so patterns are easier to review over time.</p>
@@ -749,7 +461,6 @@
         <h4>Recent Symptom Checks</h4>
         <div id="historyArea"><small>No recent checks</small></div>
       </aside>
-
       <aside class="sidebar-card">
         <h4>Symptom Analytics</h4>
         <div id="analyticsArea"><small>No data yet</small></div>
@@ -763,34 +474,31 @@
     const SETTINGS_KEY = 'wellremind.settings.v1';
     let currentSubscription = null;
 
+    document.getElementById('enableBtn').addEventListener('click', enableReminders);
+    document.getElementById('disableBtn').addEventListener('click', disableReminders);
+
     async function enableReminders() {
       showStatus('info', '⏳ Setting up reminders…');
-
       try {
         const permission = await Notification.requestPermission();
         if (permission !== 'granted') {
           showStatus('error', '❌ Notification permission denied. Please allow notifications in your browser settings.');
           return;
         }
-
         const keyRes = await fetch('/api/vapid-key');
         const { publicKey } = await keyRes.json();
-
         const reg = await navigator.serviceWorker.ready;
         const sub = await reg.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: urlBase64ToUint8Array(publicKey),
         });
-
         currentSubscription = sub;
-        const waterInterval = parseInt(document.getElementById('waterInterval').value, 10);
+        const waterInterval = parseInt(document.getElementById('</h4></p>waterInterval').value, 10);
         const stretchInterval = parseInt(document.getElementById('stretchInterval') ? document.getElementById('stretchInterval').value : 0, 10);
-        const medTimes = getMedTimes();
+</h4></h4>        const medTimes = getMedTimes();
         const mindfulnessTimes = getMindfulnessTimes();
-        const checkinTime = document.getElementById('checkinTime').value;
-
+        const checkinTime =</footer></script> document.getElementById('checkinTime').value;
         savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime);
-
         const res = await fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -803,9 +511,7 @@
             checkinTime,
           }),
         });
-
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
-
         setActiveUI(true);
         showStatus('success', '✅ Reminders enabled! You can close this tab.');
       } catch (err) {
@@ -816,19 +522,16 @@
 
     async function disableReminders() {
       if (!currentSubscription) return;
-
       const confirmed = confirm('Are you sure you want to disable reminders?');
       if (!confirmed) {
         showStatus('info', 'Reminders remain active.');
         return;
       }
-
       await fetch('/api/unsubscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ endpoint: currentSubscription.endpoint }),
       });
-
       await currentSubscription.unsubscribe();
       currentSubscription = null;
       setActiveUI(false);
@@ -839,10 +542,17 @@
       const list = document.getElementById('medList');
       const row = document.createElement('div');
       row.className = 'med-row';
-      row.innerHTML = `
-        <input type="time" value="${value}" />
-        <button class="btn-icon" type="button" onclick="this.parentElement.remove()" title="Remove">✕</button>
-      `;
+      const input = document.createElement('input');
+      input.type = 'time';
+      input.value = value;
+      const button = document.createElement('button');
+      button.className = 'btn-icon';
+      button.type = 'button';
+      button.title = 'Remove';
+      button.textContent = '✕';
+      button.addEventListener('click', () => row.remove());
+      row.appendChild(input);
+      row.appendChild(button);
       list.appendChild(row);
     }
 
@@ -851,21 +561,26 @@
       if (!list) return;
       const row = document.createElement('div');
       row.className = 'mindfulness-row';
-      row.innerHTML = `
-        <input type="time" value="${value}" />
-        <button class="btn-icon" type="button" onclick="this.parentElement.remove()" title="Remove">✕</button>
-      `;
+      const input = document.createElement('input');
+      input.type = 'time';
+      input.value = value;
+      const button = document.createElement('button');
+      button.className = 'btn-icon';
+      button.type = 'button';
+      button.title = 'Remove';
+      button.textContent = '✕';
+      button.addEventListener('click', () => row.remove());
+      row.appendChild(input);
+      row.appendChild(button);
       list.appendChild(row);
     }
 
     function getMedTimes() {
-      const el = document.querySelectorAll('#medList input[type="time"]');
-      return Array.from(el).map(i => i.value).filter(Boolean);
+      return Array.from(document.querySelectorAll('#medList input[type="time"]')).map(i => i.value).filter(Boolean);
     }
 
     function getMindfulnessTimes() {
-      const el = document.querySelectorAll('#mindfulnessList input[type="time"]');
-      return Array.from(el).map(i => i.value).filter(Boolean);
+      return Array.from(document.querySelectorAll('#mindfulnessList input[type="time"]')).map(i => i.value).filter(Boolean);
     }
 
     function savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime) {
@@ -882,12 +597,12 @@
         if (Array.isArray(medTimes) && medTimes.length) {
           const list = document.getElementById('medList');
           list.innerHTML = '';
-          medTimes.forEach(t => addMedTime(t));
+          medTimes.forEach(addMedTime);
         }
         if (Array.isArray(mindfulnessTimes) && mindfulnessTimes.length) {
           const list = document.getElementById('mindfulnessList');
           list.innerHTML = '';
-          mindfulnessTimes.forEach(t => addMindfulnessTime(t));
+          mindfulnessTimes.forEach(addMindfulnessTime);
         }
         if (checkinTime) document.getElementById('checkinTime').value = checkinTime;
       } catch (err) {
@@ -938,8 +653,15 @@
         ul.className = 'clean-list';
         data.slice().reverse().slice(0, 6).forEach(entry => {
           const li = document.createElement('li');
-          const t = new Date(entry.timestamp).toLocaleString();
-          li.innerHTML = `<strong style="display:block; margin-bottom:0.2rem; color:#f8fbff;">${t}</strong><small>${entry.symptoms.join(', ')}</small>`;
+          const title = document.createElement('strong');
+          title.style.display = 'block';
+          title.style.marginBottom = '0.2rem';
+          title.style.color = '#f8fbff';
+          title.textContent = new Date(entry.timestamp).toLocaleString();
+          const details = document.createElement('small');
+          details.textContent = entry.symptoms.join(', ');
+          li.appendChild(title);
+          li.appendChild(details);
           ul.appendChild(li);
         });
         area.appendChild(ul);
@@ -957,7 +679,6 @@
 
     function showStatus(type, msg) {
       const el = document.getElementById('status');
-      if (!el) return;
       el.className = type;
       el.textContent = msg;
     }
@@ -989,14 +710,6 @@
 
     function showUpdateReady() {
       showStatus('info', 'A new version is available. Refresh to use it.');
-      const rb = document.getElementById('reloadBtn');
-      if (rb) rb.style.display = 'block';
-    }
-
-    function reloadPage() {
-      navigator.serviceWorker.ready.then(reg => {
-        if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-      });
     }
 
     (function initDashboardExtras() {

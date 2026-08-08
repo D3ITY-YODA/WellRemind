@@ -81,7 +81,8 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.Handle("/", http.FileServer(http.Dir("static")))
+	fileServer := http.FileServer(http.Dir("static"))
+	mux.Handle("/", noCacheStatic(fileServer))
 	mux.HandleFunc("/api/vapid-key", handleVapidKey)
 	mux.HandleFunc("/api/subscribe", handleSubscribe)
 	mux.HandleFunc("/api/unsubscribe", handleUnsubscribe)
@@ -95,6 +96,17 @@ func main() {
 
 	fmt.Println("🚀 WellRemind running at http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", mux))
+}
+
+func noCacheStatic(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" || r.URL.Path == "/index.html" || r.URL.Path == "/sw.js" {
+			w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
+			w.Header().Set("Pragma", "no-cache")
+			w.Header().Set("Expires", "0")
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 func loadState() error {
