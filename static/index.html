@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="</head>UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WellRemind</title></head>
+  <title>WellRemind</title></title>
   <link rel="icon" href="/icon.svg" />
   <link rel="manifest" href="/manifest.json" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;</title>500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #07111c;
-      --panel: rgba(10</style>, 18, 30, 0.9);
-      --panel-elevated: rgba(15, 25, 40, 0.96);
+     </style> --panel: rgba(10, 18, 30, 0.92);
+      --panel-elevated: rgba(15, 25, 40, 0.98);
       --text: #e5edf5;
       --text-strong: #f8fbff;
       --muted: #94a3b8;
       --border: rgba(148, 163, 184, 0.16);
       --border-strong: rgba(148, 163, 184, 0.24);
       --accent: #38bdf8;
+      --accent-deep: #0ea5e9;
       --medical: #22c55e;
       --medical-soft: rgba(34, 197, 94, 0.12);
       --danger: #fb7185;
@@ -28,6 +29,7 @@
     }
 
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -45,14 +47,13 @@
       padding: 1.3rem 0 3rem;
     }
 
-    .topbar, .panel-header {
+    .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
+      margin-bottom: 1.4rem;
     }
-
-    .topbar { margin-bottom: 1.4rem; }
 
     .brand {
       display: flex;
@@ -73,12 +74,18 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 12px 30px rgba(0,0,0,0.3);
     }
 
-    .brand-copy h1, .panel-header h3, .feature-card h4, .sidebar-card h4 {
+    .brand-copy h1,
+    .panel-header h3,
+    .feature-card h4,
+    .sidebar-card h4 {
       margin: 0;
       color: var(--text-strong);
     }
 
-    .brand-copy p, .panel-header p, .feature-card p, .sidebar-card small {
+    .brand-copy p,
+    .panel-header p,
+    .feature-card p,
+    .sidebar-card small {
       color: var(--muted);
       margin: 0.25rem 0 0;
       line-height: 1.6;
@@ -158,9 +165,20 @@
       gap: 1rem;
     }
 
-    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.8rem; }
-    .dashboard-lower { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.2rem; }
-    .analytics-grid { grid-template-columns: 1fr 1fr; margin-top: 1.2rem; }
+    .hero-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 1.8rem;
+    }
+
+    .dashboard-lower {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 1.2rem;
+    }
+
+    .analytics-grid {
+      grid-template-columns: 1fr 1fr;
+      margin-top: 1.2rem;
+    }
 
     .stat,
     .card,
@@ -171,11 +189,41 @@
     }
 
     .setup-panel { padding: 1.25rem; }
-    .card, .feature-card, .sidebar-card { padding: 1.1rem; border-radius: var(--radius-lg); border: 1px solid var(--border); }
-    .stat { padding: 1rem; border-radius: 18px; border: 1px solid rgba(148, 163, 184, 0.14); background: rgba(255,255,255,0.035); }
 
-    .stat strong { display: block; color: var(--text-strong); margin-bottom: 0.3rem; }
-    .stat span { color: #afc2d2; font-size: 0.88rem; line-height: 1.6; }
+    .card,
+    .feature-card,
+    .sidebar-card {
+      padding: 1.1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--text-strong);
+      margin-bottom: 0.3rem;
+    }
+
+    .stat span {
+      color: #afc2d2;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
 
     .pill {
       padding: 0.52rem 0.8rem;
@@ -219,7 +267,8 @@
       margin-bottom: 0.95rem;
     }
 
-    .card-icon, .feature-icon {
+    .card-icon,
+    .feature-icon {
       width: 38px;
       height: 38px;
       border-radius: 12px;
@@ -241,7 +290,8 @@
       letter-spacing: 0.08em;
     }
 
-    select, input[type="time"] {
+    select,
+    input[type="time"] {
       width: 100%;
       border: 1px solid var(--border-strong);
       border-radius: 14px;
@@ -251,18 +301,29 @@
       background: #0b1522;
     }
 
-    .subtle { margin-top: 0.55rem; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+    .subtle {
+      margin-top: 0.55rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
 
-    .med-row, .mindfulness-row {
+    .med-row,
+    .mindfulness-row {
       display: flex;
       gap: 0.55rem;
       align-items: center;
       margin-bottom: 0.55rem;
     }
 
-    .med-row input, .mindfulness-row input { flex: 1; }
+    .med-row input,
+    .mindfulness-row input {
+      flex: 1;
+    }
 
-    .btn-icon, .btn-secondary, .btn-primary {
+    .btn-icon,
+    .btn-secondary,
+    .btn-primary {
       font: inherit;
       border-radius: 14px;
       cursor: pointer;
@@ -300,7 +361,10 @@
       margin-top: 0.25rem;
     }
 
-    .actions .btn-primary, .actions .btn-secondary { flex: 1 1 180px; }
+    .actions .btn-primary,
+    .actions .btn-secondary {
+      flex: 1 1 180px;
+    }
 
     #status {
       min-height: 1.25rem;
@@ -313,12 +377,38 @@
       border: 1px solid transparent;
     }
 
-    #status.success { display: block; background: rgba(34, 197, 94, 0.12); color: #c7f9d8; border-color: rgba(34, 197, 94, 0.18); }
-    #status.error { display: block; background: rgba(251, 113, 133, 0.12); color: #ffd7df; border-color: rgba(251, 113, 133, 0.18); }
-    #status.info { display: block; background: rgba(56, 189, 248, 0.12); color: #d7f3ff; border-color: rgba(56, 189, 248, 0.18); }
+    #status.success {
+      display: block;
+      background: rgba(34, 197, 94, 0.12);
+      color: #c7f9d8;
+      border-color: rgba(34, 197, 94, 0.18);
+    }
 
-    ul.clean-list { list-style: none; padding: 0; margin: 0; }
-    ul.clean-list li + li { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid rgba(148, 163, 184, 0.12); }
+    #status.error {
+      display: block;
+      background: rgba(251, 113, 133, 0.12);
+      color: #ffd7df;
+      border-color: rgba(251, 113, 133, 0.18);
+    }
+
+    #status.info {
+      display: block;
+      background: rgba(56, 189, 248, 0.12);
+      color: #d7f3ff;
+      border-color: rgba(56, 189, 248, 0.18);
+    }
+
+    ul.clean-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.clean-list li + li {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+    }
 
     footer {
       text-align: center;
@@ -328,34 +418,46 @@
     }
 
     @media (max-width: 980px) {
-      .hero, .dashboard-lower, .analytics-grid, .hero-stats { grid-template-columns: 1fr; }
+      .hero,
+      .dashboard-lower,
+      .analytics-grid,
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
       .hero-copy { padding: 2rem; }
     }
 
     @media (max-width: 640px) {
       .page { width: min(calc(100% - 1rem), var(--max-width)); }
-      .topbar, .panel-header, .actions { flex-direction: column; align-items: flex-start; }
+      .topbar,
+      .panel-header,
+      .actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
       .hero-copy { padding: 1.5rem; }
       .hero-copy h2 { font-size: 2.75rem; }
-      .actions .btn-primary, .actions .btn-secondary { width: 100%; }
+      .actions .btn-primary,
+      .actions .btn-secondary { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <main class="page">
+  <main class="page"></body>
     <header class="topbar">
       <div class="brand">
         <div class="logo">WR</div>
         <div class="brand-copy">
           <h1>WellRemind</h1>
           <p>Professional wellness reminders</p>
-        </div</body>>
+        </div>
       </div>
-      <a class="top-link" href="/symptom-checker">Symptom Checker</a>
+      <a class="top-link" href="</h1></p>/symptom-checker">Symptom Checker</a>
     </header>
 
     <section class="hero">
-      <div class</h1></p>="hero-copy">
+      <div class="hero-copy">
         <div class="eyebrow">Clinical clarity • Daily consistency</div>
         <h2>Stay consistent with the care routines that matter.</h2>
         <p class="lead">WellRemind provides a refined reminder experience for hydration, medication, mindfulness, and daily check-ins — designed to feel dependable</h2>, discreet, and professional.</p>
@@ -365,44 +467,44 @@
             <strong>Structured routines</strong>
             <span>Organize core wellness reminders in one calm, intentional dashboard.</span>
           </div>
-          <div class="stat">
-            <strong>Reliable alerts</strong>
-            <span>Receive background notifications for medications and healthy daily habits.</span></strong></span>
+         </strong> <div class="stat">
+           </span> <strong>Reliable alerts</strong>
+            <span>Receive background</strong></span> notifications for medications and healthy daily habits.</span>
           </div>
           <div class="stat">
             <strong>Track symptoms</strong>
-            <span>Review recent symptom checks and simple usage trends at a glance.</span>
+            <span>Review recent symptom checks and simple usage trends at a</strong></span> glance.</span>
           </div>
-</strong></span>        </div>
+        </div>
       </div>
 
       <div class="setup-panel">
         <div class="panel-header">
-          <div</strong>>
+          <div>
             <h3>Configure your wellness schedule</h3>
-<p>Choose your preferred timing once, then let reminders support your day quietly in the background.</p>
+            <p>Choose your preferred timing once, then let reminders support your day quietly in the background.</p>
           </div>
-          <div class="pill">Secure browser setup</div>
+          <div class="pill">Secure browser setup</</div>div>
         </div>
 
-        <</h3></p>div class="active-banner" id="activeBanner">
-          <div class="dot"></div>
+        <div class="</h3>active-banner" id="activeBanner">
+         </p> <div class="dot"></div>
           <div><strong>Reminders active.</strong> You'll be notified in the background.</div>
         </div>
 
         <div class="form-grid">
           <section class="card">
-            <div class="card-title</strong>"><div class="card-icon">💧</div><span>Hydration Reminder</span></div>
+            <div class="card-title"><div class="card-icon</strong>">💧</div><span>Hydration Reminder</span></div>
             <label for="waterInterval">Remind me every</label>
             <select id="waterInterval">
               <option value="0">— Off —</option>
-              <option value="30">30 minutes</option></span>
-              <option value="60" selected>1 hour</option>
+              <option value="30">30 minutes</option>
+              <</span>option value="60" selected>1 hour</option>
               <option value="90">1.5 hours</option>
               <option value="120">2 hours</option>
               <option value="180">3 hours</option>
             </select>
-            <p class="subtle">Helpful for workdays, recovery routines, and long periods</option> of focused activity.</p>
+            <p class="subtle">Helpful for workdays, recovery routines, and long periods of focused activity.</p>
           </section>
 
           <section class="card">
@@ -411,21 +513,21 @@
             <div id="medList">
               <div class="med-row"><input type="time" value="08:00" /></div>
             </div>
-            <</span>div class="inline-add"><button class="btn-secondary" type="button" onclick</label>="addMedTime()">＋ Add time</button></div>
+            <div class="inline-add"><button class="btn-secondary" type="button" onclick="addMedTime()">＋ Add time</button></div>
           </section>
 
           <section class="card">
             <div class="card-title"><div class="card-icon">🧘</div><span>Mindfulness Prompts</span></div>
             <label>Pause and reset at</label>
-            <div id="mindfulnessList"></div>
-            <div class="inline-add"><button class="btn-secondary"</span> type="button" onclick="addMindfulnessTime()">＋</label> Add mindfulness time</button></div>
+           </span> <div id="mindfulnessList"></div>
+            <div class="inline-add"><button class="btn-secondary" type="button" onclick="addMindfulnessTime()">＋ Add mindfulness time</button></div>
           </section>
 
           <section class="card">
-            <div class="card-title"><div class="card-icon">📝</div><span>Daily Check-in</span></div>
+            <div</label> class="card-title"><div class="card-icon">📝</div><span>Daily Check-in</span></div>
             <label for="checkinTime">Check in at</label>
             <input id="checkinTime" type="time" value="18:00" />
-            <p class="subtle">Set a consistent time to</span> reflect on symptoms, energy, and overall wellbeing.</p>
+            <p class="subtle">Set a consistent time to reflect on symptoms, energy, and overall wellbeing.</p>
           </section>
         </div>
 
@@ -442,23 +544,23 @@
       <article class="feature-card">
         <div class="feature-icon">🔔</div>
         <h4>Background notifications</h4>
-        <</h4>p>Designed to provide discreet reminders without distracting from your work, routine, or recovery.</p>
+        <p>Designed to provide discreet reminders without distracting from your work, routine, or recovery.</p>
       </article>
       <article class="feature-card">
         <div class="feature-icon">🩺</div>
         <h4>Professional presentation</h4>
         <p>A darker premium interface with a calmer visual tone and stronger information hierarchy.</p>
       </article>
-</h4>      <article class="feature-card">
+      <article class="feature-card">
         <div class="feature-icon">📊</div>
         <h4>At-a-glance monitoring</h4>
-        <p>Recent symptom checks and analytics stay visible so patterns are easier to review over time.</p>
+        <p>Recent symptom checks</span></label> and analytics stay visible so patterns are easier to review over time.</p>
       </article>
     </section>
 
     <section class="analytics-grid">
       <aside class="sidebar-card">
-        <h4>Recent Symptom Checks</h4>
+        <h4>Recent Symptom Checks</h4</span>>
         <div id="historyArea"><small>No recent checks</small></div>
       </aside>
       <aside class="sidebar-card">
@@ -467,38 +569,43 @@
       </aside>
     </section>
 
-    <footer>Works in modern browsers. Notification permission is required.</footer>
+    <footer>Works in modern browsers. Notification permission is required.</footer></h4>
   </main>
 
   <script>
     const SETTINGS_KEY = 'wellremind.settings.v1';
-    let currentSubscription = null;
+</p>    let currentSubscription = null;
 
-    document.getElementById('enableBtn').addEventListener('click', enableReminders);
-    document.getElementById('disableBtn').addEventListener('click', disableReminders);
+    document.getElementById('enableBtn').add</h4></h4>EventListener('click', enableReminders);
+    document.getElementById('disableBtn').addEventListener('</p>click', disableReminders);
 
-    async function enableReminders() {
-      showStatus('info', '⏳ Setting up reminders…');
+    async function enableReminders</h4></h4>() {
+      showStatus('info', '⏳</footer></script> Setting up reminders…');
       try {
         const permission = await Notification.requestPermission();
         if (permission !== 'granted') {
           showStatus('error', '❌ Notification permission denied. Please allow notifications in your browser settings.');
           return;
         }
+
         const keyRes = await fetch('/api/vapid-key');
         const { publicKey } = await keyRes.json();
+
         const reg = await navigator.serviceWorker.ready;
         const sub = await reg.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: urlBase64ToUint8Array(publicKey),
         });
+
         currentSubscription = sub;
-        const waterInterval = parseInt(document.getElementById('</h4></p>waterInterval').value, 10);
+        const waterInterval = parseInt(document.getElementById('waterInterval').value, 10);
         const stretchInterval = parseInt(document.getElementById('stretchInterval') ? document.getElementById('stretchInterval').value : 0, 10);
-</h4></h4>        const medTimes = getMedTimes();
+        const medTimes = getMedTimes();
         const mindfulnessTimes = getMindfulnessTimes();
-        const checkinTime =</footer></script> document.getElementById('checkinTime').value;
+        const checkinTime = document.getElementById('checkinTime').value;
+
         savePreferences(waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime);
+
         const res = await fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -511,7 +618,9 @@
             checkinTime,
           }),
         });
+
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
         setActiveUI(true);
         showStatus('success', '✅ Reminders enabled! You can close this tab.');
       } catch (err) {
@@ -522,16 +631,19 @@
 
     async function disableReminders() {
       if (!currentSubscription) return;
+
       const confirmed = confirm('Are you sure you want to disable reminders?');
       if (!confirmed) {
         showStatus('info', 'Reminders remain active.');
         return;
       }
+
       await fetch('/api/unsubscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ endpoint: currentSubscription.endpoint }),
       });
+
       await currentSubscription.unsubscribe();
       currentSubscription = null;
       setActiveUI(false);
@@ -542,15 +654,18 @@
       const list = document.getElementById('medList');
       const row = document.createElement('div');
       row.className = 'med-row';
+
       const input = document.createElement('input');
       input.type = 'time';
       input.value = value;
+
       const button = document.createElement('button');
       button.className = 'btn-icon';
       button.type = 'button';
       button.title = 'Remove';
       button.textContent = '✕';
       button.addEventListener('click', () => row.remove());
+
       row.appendChild(input);
       row.appendChild(button);
       list.appendChild(row);
@@ -559,17 +674,21 @@
     function addMindfulnessTime(value = '10:00') {
       const list = document.getElementById('mindfulnessList');
       if (!list) return;
+
       const row = document.createElement('div');
       row.className = 'mindfulness-row';
+
       const input = document.createElement('input');
       input.type = 'time';
       input.value = value;
+
       const button = document.createElement('button');
       button.className = 'btn-icon';
       button.type = 'button';
       button.title = 'Remove';
       button.textContent = '✕';
       button.addEventListener('click', () => row.remove());
+
       row.appendChild(input);
       row.appendChild(button);
       list.appendChild(row);
@@ -591,19 +710,23 @@
       try {
         const stored = localStorage.getItem(SETTINGS_KEY);
         if (!stored) return;
+
         const { waterInterval, stretchInterval, medTimes, mindfulnessTimes, checkinTime } = JSON.parse(stored);
         if (waterInterval) document.getElementById('waterInterval').value = waterInterval;
         if (stretchInterval && document.getElementById('stretchInterval')) document.getElementById('stretchInterval').value = stretchInterval;
+
         if (Array.isArray(medTimes) && medTimes.length) {
           const list = document.getElementById('medList');
           list.innerHTML = '';
           medTimes.forEach(addMedTime);
         }
+
         if (Array.isArray(mindfulnessTimes) && mindfulnessTimes.length) {
           const list = document.getElementById('mindfulnessList');
           list.innerHTML = '';
           mindfulnessTimes.forEach(addMindfulnessTime);
         }
+
         if (checkinTime) document.getElementById('checkinTime').value = checkinTime;
       } catch (err) {
         console.warn('Failed to load saved preferences', err);
@@ -617,10 +740,12 @@
         const area = document.getElementById('analyticsArea');
         area.innerHTML = '';
         const entries = Object.entries(data).sort((a, b) => b[1] - a[1]);
+
         if (!entries.length) {
           area.innerHTML = '<small>No data yet</small>';
           return;
         }
+
         const ul = document.createElement('ul');
         ul.className = 'clean-list';
         entries.forEach(([k, v]) => {
@@ -642,13 +767,16 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ endpoint })
         });
+
         const data = await res.json();
         const area = document.getElementById('historyArea');
         area.innerHTML = '';
+
         if (!data || !data.length) {
           area.innerHTML = '<small>No recent checks</small>';
           return;
         }
+
         const ul = document.createElement('ul');
         ul.className = 'clean-list';
         data.slice().reverse().slice(0, 6).forEach(entry => {
@@ -658,8 +786,10 @@
           title.style.marginBottom = '0.2rem';
           title.style.color = '#f8fbff';
           title.textContent = new Date(entry.timestamp).toLocaleString();
+
           const details = document.createElement('small');
           details.textContent = entry.symptoms.join(', ');
+
           li.appendChild(title);
           li.appendChild(details);
           ul.appendChild(li);
@@ -700,6 +830,7 @@
           if (worker.state === 'installed' && navigator.serviceWorker.controller) showUpdateReady();
         });
       });
+
       let refreshing = false;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         if (refreshing) return;
